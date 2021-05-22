@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deviot.Hermes.ModbusTcp.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deviot.Hermes.ModbusTcp.Data", "src\Deviot.Hermes.ModbusTcp.Data\Deviot.Hermes.ModbusTcp.Data.csproj", "{4F28BAD6-DFAB-45A2-8A4B-B64BBC003620}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{91CF110B-CFDF-44EE-9846-E3243421746F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deviot.Hermes.ModbusTcp.Tests", "Deviot.Hermes.ModbusTcp.Tests", "{4458FDE3-B4DC-43CF-A339-E79D66E7412F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deviot.Hermes.ModbusTcp.Tests", "tests\Deviot.Hermes.ModbusTcp.Tests\Deviot.Hermes.ModbusTcp.Tests\Deviot.Hermes.ModbusTcp.Tests.csproj", "{DA50AA88-94BB-4E71-AB57-4FFB5490675D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +64,21 @@ Global
 		{4F28BAD6-DFAB-45A2-8A4B-B64BBC003620}.Release|x64.Build.0 = Release|Any CPU
 		{4F28BAD6-DFAB-45A2-8A4B-B64BBC003620}.Release|x86.ActiveCfg = Release|Any CPU
 		{4F28BAD6-DFAB-45A2-8A4B-B64BBC003620}.Release|x86.Build.0 = Release|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Debug|x64.Build.0 = Debug|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Debug|x86.Build.0 = Debug|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Release|x64.ActiveCfg = Release|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Release|x64.Build.0 = Release|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Release|x86.ActiveCfg = Release|Any CPU
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4458FDE3-B4DC-43CF-A339-E79D66E7412F} = {91CF110B-CFDF-44EE-9846-E3243421746F}
+		{DA50AA88-94BB-4E71-AB57-4FFB5490675D} = {4458FDE3-B4DC-43CF-A339-E79D66E7412F}
 	EndGlobalSection
 EndGlobal
