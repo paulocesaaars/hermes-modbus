@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Deviot.Hermes.ModbusTcp.IntegrationTests
+namespace Deviot.Hermes.ModbusTcp.TDD
 {
     public class UnitTest1
     {
