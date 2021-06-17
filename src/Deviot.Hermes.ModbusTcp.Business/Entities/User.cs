@@ -24,18 +24,16 @@ namespace Deviot.Hermes.ModbusTcp.Business.Entities
             Id = id;
             Name = name;
             UserName = userName.ToLower();
-            Password = password;
+            Password = Utils.Encript(password);
             Enabled = enabled;
         }
 
         public void SetName(string value) => Name = value;
 
-        public void SetUserName(string value) => UserName = value;
+        public void SetUserName(string value) => UserName = value.ToLower();
 
         public void SetPassword(string value) => Password = Utils.Encript(value);
 
-        public void Enable() => Enabled = true;
-
-        public void Disable() => Enabled = false;
+        public void SetEnabled(bool value) => Enabled = value;
     }
 }

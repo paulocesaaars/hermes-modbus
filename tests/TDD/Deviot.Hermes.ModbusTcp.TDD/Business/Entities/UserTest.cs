@@ -1,4 +1,5 @@
-﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
+﻿using Deviot.Common;
+using Deviot.Hermes.ModbusTcp.Business.Entities;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -7,23 +8,33 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Entities
 {
     public class UserTest
     {
+        private static User GetUserTest(Guid id) => new User(id, "Teste", "Teste", "123", true);
+
         [Fact(DisplayName = "Construtor da classe")]
         public void ValidateConstructor()
         {
-            var user = new User(Guid.NewGuid(), "Teste", "teste", "123456");
+            var id = Guid.NewGuid();
+            var user = GetUserTest(id);
 
-            user.Id.Should().NotBeEmpty();
-            user.Name.Should().NotBeEmpty();
-            user.UserName.Should().NotBeEmpty();
-            user.Password.Should().NotBeEmpty();
+            user.Id.Should().Be(id);
+            user.Name.Should().Be("Teste");
+            user.UserName.Should().Be("teste");
+            user.Password.Should().Be(Utils.Encript("123"));
+            user.Enabled.Should().Be(true);
         }
 
-        [Fact(DisplayName = "Nome de usuário deve ser sempre em letra minúscula")]
+        [Fact(DisplayName = "Validar metódos sets")]
         public void Validate_ToLower_Username()
         {
-            var user = new User(Guid.NewGuid(), "Teste", "Teste", "123456");
+            var user = new User();
+            var esperado = GetUserTest(user.Id);
 
-            user.UserName.Should().Be(user.UserName.ToLower());
+            user.SetName("Teste");
+            user.SetUserName("Teste");
+            user.SetPassword("123");
+            user.SetEnabled(true);
+
+            user.Should().BeEquivalentTo(esperado);
         }
     }
 }

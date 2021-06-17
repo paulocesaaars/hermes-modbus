@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Deviot.Hermes.ModbusTcp.Business.Base
 {
-    [ExcludeFromCodeCoverage]
-    public abstract class EntityBase
+    public class EntityBase
     {
         public Guid Id { get; protected set; }
 
-        protected EntityBase()
+        public EntityBase()
         {
             Id = Guid.NewGuid();
         }
 
-        protected EntityBase(Guid id)
+        public EntityBase(Guid id)
         {
             Id = id;
         }
