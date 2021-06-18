@@ -1,8 +1,8 @@
 ﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Validators;
+using Deviot.Hermes.ModbusTcp.TDD.Extensions;
 using FluentValidation.TestHelper;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
@@ -17,9 +17,9 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
         }
 
         [Fact(DisplayName = "Tamanho mínimo propriedade nome completo")]
-        public void User_Name_ValidateMinimumLength()
+        public void Name_ValidateMinimumLength()
         {
-            var name = GetGenericString(2);
+            var name = TestUtils.GetGenericString(2);
             var user = GetUser(name);
 
             var result = _userValidator.TestValidate(user);
@@ -28,9 +28,9 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
         }
 
         [Fact(DisplayName = "Tamanho máximo propriedade nome completo")]
-        public void User_UserName_MaximumLength()
+        public void UserName_MaximumLength()
         {
-            var name = GetGenericString(151);
+            var name = TestUtils.GetGenericString(151);
             var user = GetUser(name);
 
             var result = _userValidator.TestValidate(user);
@@ -39,10 +39,10 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
         }
 
         [Fact(DisplayName = "Tamanho mínimo propriedade nome de usuário")]
-        public void User_UserName_ValidateMinimumLength()
+        public void UserName_ValidateMinimumLength()
         {
-            var name = GetGenericString(2);
-            var user = GetUser(name);
+            var userName = TestUtils.GetGenericString(2);
+            var user = GetUser(userName: userName);
 
             var result = _userValidator.TestValidate(user);
 
@@ -50,10 +50,20 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
         }
 
         [Fact(DisplayName = "Tamanho máximo propriedade nome de usuário")]
-        public void User_Name_MaximumLength()
+        public void Name_MaximumLength()
         {
-            var name = GetGenericString(21);
-            var user = GetUser(name);
+            var userName = TestUtils.GetGenericString(21);
+            var user = GetUser(userName: userName);
+
+            var result = _userValidator.TestValidate(user);
+
+            result.ShouldHaveValidationErrorFor(x => x.UserName);
+        }
+
+        [Fact(DisplayName = "Somente alfanúmerico propriedade nome de usuário")]
+        public void Name_Custom()
+        {
+            var user = GetUser(userName: "nome espaço");
 
             var result = _userValidator.TestValidate(user);
 
@@ -63,17 +73,6 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
         private static User GetUser(string name = "Teste", string userName = "teste", string password = "123456789")
         {
             return new User(Guid.NewGuid(), name, userName, password, true);
-        }
-
-        private static string GetGenericString(int length)
-        {
-            var random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-            return new string(
-                Enumerable.Repeat(chars, length)
-                          .Select(s => s[random.Next(s.Length)])
-                          .ToArray());
         }
     }
 }

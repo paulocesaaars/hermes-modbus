@@ -15,11 +15,9 @@ namespace Deviot.Hermes.ModbusTcp.Business.Validators
             RuleFor(x => x.UserName).MinimumLength(3).WithMessage("O nome de usuário precisa ter no mínimo 3 caracteres.")
                                     .MaximumLength(20).WithMessage("O nome de usuário precisa ter no máximo 20 caracteres.")
                                     .Custom((userName, context) => {
-                                            if(Utils.ValidateAlphanumericWithUnderline(userName))
+                                            if(!Utils.ValidateAlphanumericWithUnderline(userName))
                                                 context.AddFailure("O nome de usuário precisar ter somente valores alfanuméricos ou underline.");
                                     });
-
-            RuleFor(x => x.Password).NotEmpty().WithMessage("A senha é obrigatória.");
         }
     }
 }

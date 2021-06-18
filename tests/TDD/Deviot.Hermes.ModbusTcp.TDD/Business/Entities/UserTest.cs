@@ -8,8 +8,6 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Entities
 {
     public class UserTest
     {
-        private static User GetUserTest(Guid id) => new User(id, "Teste", "Teste", "123", true);
-
         [Fact(DisplayName = "Construtor da classe")]
         public void ValidateConstructor()
         {
@@ -23,8 +21,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Entities
             user.Enabled.Should().Be(true);
         }
 
-        [Fact(DisplayName = "Validar metódos sets")]
-        public void Validate_ToLower_Username()
+        [Fact(DisplayName = "Metódos de propriedade")]
+        public void Validate_SetMethods()
         {
             var user = new User();
             var esperado = GetUserTest(user.Id);
@@ -36,5 +34,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Entities
 
             user.Should().BeEquivalentTo(esperado);
         }
+
+        private static User GetUserTest(Guid id) => new User(id, "Teste", "Teste", "123", true);
     }
 }

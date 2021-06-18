@@ -8,8 +8,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Bases
 {
     public class ValidatorBaseTest
     {
-        [Fact(DisplayName = "Validar id")]
-        public void ValidateConstructor()
+        [Fact(DisplayName = "Campo obrigatório propriedade Id")]
+        public void Id_NotEmpty()
         {
             var entity = new EntityBase(Guid.Empty);
             var validator = new EntityBaseValidator();
