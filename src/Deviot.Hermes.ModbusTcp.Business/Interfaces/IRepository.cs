@@ -1,15 +1,12 @@
 ﻿using Deviot.Hermes.ModbusTcp.Business.Base;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Deviot.Hermes.ModbusTcp.Data
+namespace Deviot.Hermes.ModbusTcp.Business.Interfaces
 {
     public interface IRepository : IDisposable
     {
-        DbContext DbContext { get; }
-
         IQueryable<TEntity> Get<TEntity>() where TEntity : EntityBase;
 
         Task AddAsync<TEntity>(TEntity entity) where TEntity : EntityBase;

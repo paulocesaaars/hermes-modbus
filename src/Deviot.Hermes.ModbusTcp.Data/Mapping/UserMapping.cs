@@ -25,7 +25,7 @@ namespace Deviot.Hermes.ModbusTcp.Data.Mapping
                 .IsRequired();
 
             builder.Property(o => o.Password)
-                .HasColumnType("varchar(150)")
+                .HasColumnType("varchar(300)")
                 .IsRequired();
         }
     }

@@ -1,4 +1,6 @@
 ﻿using Deviot.Hermes.ModbusTcp.Business.Base;
+using Deviot.Hermes.ModbusTcp.Business.Interfaces;
+using Deviot.Hermes.ModbusTcp.Data.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace Deviot.Hermes.ModbusTcp.Data
 
         public DbContext DbContext { get; private set; }
 
-        public Repository(DbContext db)
+        public Repository(ApplicationDbContext db)
         {
             DbContext = db;
         }

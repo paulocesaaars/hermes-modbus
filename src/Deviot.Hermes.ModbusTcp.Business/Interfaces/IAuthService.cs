@@ -5,6 +5,6 @@ namespace Deviot.Hermes.ModbusTcp.Business.Interfaces
 {
     public interface IAuthService
     {
-        Task<Token> LoginAsync(string name, string password);
+        Task<Token> LoginAsync(Login login);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Deviot.Common;
 using Deviot.Hermes.ModbusTcp.Business.Entities;
+using Deviot.Hermes.ModbusTcp.Business.Interfaces;
 using Deviot.Hermes.ModbusTcp.Data;
 using Deviot.Hermes.ModbusTcp.Data.Configuration;
 using FluentAssertions;
