@@ -15,27 +15,17 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
     {
         private readonly JwtSettings _jwtSettings;
 
+        private const string CONFIG_ERROR = "As configurações do token não foram informadas";
+
         public TokenService(IOptions<JwtSettings> jwtSettings)
         {
+            if (jwtSettings.Value is null)
+                throw new Exception(CONFIG_ERROR);
+            
             _jwtSettings = jwtSettings.Value;
         }
 
-        public Token GenerateToken(User user)
-        {
-            try
-            {
-                var id = Guid.NewGuid();
-                var identityClaims = GenerateClaimsIdentity(id, user);
-                var accessToken = GenerateAccessToken(identityClaims);
-                return new Token(id, accessToken);
-            }
-            catch (Exception exception)
-            {
-                throw new Exception("Erro ao gerar o token.", exception);
-            }
-        }
-
-        private static ClaimsIdentity GenerateClaimsIdentity(Guid id, User user)
+        private static ClaimsIdentity GenerateClaimsIdentity(Guid tokenId, UserInfo user)
         {
             var identityClaims = new ClaimsIdentity();
             identityClaims.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()));
@@ -44,8 +34,14 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             identityClaims.AddClaim(new Claim(JwtRegisteredClaimNames.Nbf, Utils.ToUnixEpochDate(DateTime.UtcNow).ToString()));
             identityClaims.AddClaim(new Claim(JwtRegisteredClaimNames.Iat, Utils.ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
             identityClaims.AddClaim(new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName));
-            identityClaims.AddClaim(new Claim("token-id", id.ToString()));
+            identityClaims.AddClaim(new Claim("token-id", tokenId.ToString()));
             identityClaims.AddClaim(new Claim("user-id", user.Id.ToString()));
+            identityClaims.AddClaim(new Claim("user-fullname", user.FullName.ToString()));
+            identityClaims.AddClaim(new Claim("user-username", user.UserName.ToString()));
+            identityClaims.AddClaim(new Claim("user-administrator", user.Administrator.ToString()));
+
+            if (user.Administrator)
+                identityClaims.AddClaim(new Claim("role", "admin"));
 
             return identityClaims;
         }
@@ -65,5 +61,22 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
 
             return tokenHandler.WriteToken(token);
         }
+
+        public Token GenerateToken(UserInfo user)
+        {
+            try
+            {
+                var tokenId = Guid.NewGuid();
+                var identityClaims = GenerateClaimsIdentity(tokenId, user);
+                var accessToken = GenerateAccessToken(identityClaims);
+                return new Token(tokenId, accessToken, user);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Erro ao gerar o token.", exception);
+            }
+        }
+
+        
     }
 }

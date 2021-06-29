@@ -1,8 +1,13 @@
-﻿namespace Deviot.Hermes.ModbusTcp.Api.Models
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Deviot.Hermes.ModbusTcp.Api.Models
 {
+    [ExcludeFromCodeCoverage]
+
     public class CustomActionResult
     {
-        public string Message { get; private set; }
+        public IEnumerable<string> Messages { get; private set; }
 
         public object Data { get; private set; }
 
@@ -13,7 +18,13 @@
 
         public CustomActionResult(string message, object data)
         {
-            Message = message;
+            Messages = new List<string>(1) { message };
+            Data = data;
+        }
+
+        public CustomActionResult(IEnumerable<string> message, object data)
+        {
+            Messages = message;
             Data = data;
         }
     }

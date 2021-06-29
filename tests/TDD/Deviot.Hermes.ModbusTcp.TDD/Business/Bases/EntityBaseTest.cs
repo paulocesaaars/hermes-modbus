@@ -1,10 +1,12 @@
 ﻿using Deviot.Hermes.ModbusTcp.Business.Base;
 using FluentAssertions;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Business.Bases
 {
+    [ExcludeFromCodeCoverage]
     public class EntityBaseTest
     {
         [Fact(DisplayName = "Construtor vazio da classe")]

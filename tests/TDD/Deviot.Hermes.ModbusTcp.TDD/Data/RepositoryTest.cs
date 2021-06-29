@@ -1,12 +1,9 @@
-﻿using Deviot.Common;
-using Deviot.Hermes.ModbusTcp.Business.Entities;
+﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Interfaces;
-using Deviot.Hermes.ModbusTcp.Data;
-using Deviot.Hermes.ModbusTcp.Data.Configuration;
+using Deviot.Hermes.ModbusTcp.TDD.Fakes;
+using Deviot.Hermes.ModbusTcp.TDD.Helpers;
 using FluentAssertions;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
@@ -20,31 +17,14 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Data
 
         public RepositoryTest()
         {
-            var context = CreateContext();
-            context.Database.EnsureCreated();
-
-            _repository = new Repository(context);
+            _repository = RepositoryHelper.GetRepository();
         }
 
-        private static ApplicationDbContext CreateContext()
-        {
-            var connection = new SqliteConnection("Data Source=:memory:");
-            connection.Open();
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                .UseSqlite(connection)
-                                .Options;
-
-            return new ApplicationDbContext(options);
-        }
-
-        private static User GetUserAdmin() => new User(new Guid("7011423f65144a2fb1d798dec19cf466"), "Administrador", "admin", Utils.Encript("admin"), true);
-
-        private static User GetUserPaulo() => new User(new Guid("9b200ae920aa4898b0fd7d2d4e68eaab"), "Paulo César de Souza", "paulo", "123", true);
 
         [Fact(DisplayName = "Busca com filtro")]
-        public async Task Get_DeveRetornarUsuarioPaulo()
+        public async Task Get_DeveRetornarUsuario()
         {
-            var esperado = GetUserAdmin();
+            var esperado = UserFake.GetUserAdmin(true);
 
             var resultado = await _repository.Get<User>().FirstOrDefaultAsync(u => u.Id == esperado.Id);
 
@@ -54,7 +34,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Data
         [Fact(DisplayName = "Adicionar")]
         public async Task Add_DeveRetornarUsuarioNovo()
         {
-            var newUser = GetUserPaulo();
+            var newUser = UserFake.GetUserNormal();
 
             await _repository.AddAsync<User>(newUser);
 
@@ -66,9 +46,9 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Data
         [Fact(DisplayName = "Editar")]
         public async Task Edit_DeveRetornarUsuarioNovo()
         {
-            var userAdmin = GetUserAdmin();
+            var userAdmin = UserFake.GetUserAdmin();
 
-            userAdmin.SetName("Usuario editado");
+            userAdmin.SetFullName("Usuario editado");
             await _repository.EditAsync(userAdmin);
             var resultado = await _repository.Get<User>().FirstOrDefaultAsync(u => u.Id == userAdmin.Id);
 
@@ -78,7 +58,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Data
         [Fact(DisplayName = "Deletar")]
         public async Task Delete_DeveRetornarUsuarioNovo()
         {
-            var userAdmin = GetUserAdmin();
+            var userAdmin = UserFake.GetUserAdmin();
             var total = await _repository.Get<User>().CountAsync();
 
             await _repository.DeleteAsync(userAdmin);

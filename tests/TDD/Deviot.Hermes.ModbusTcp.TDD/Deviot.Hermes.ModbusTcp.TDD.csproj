@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\..\src\Deviot.Hermes.ModbusTcp.Data\Deviot.Hermes.ModbusTcp.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Api\" />
+  </ItemGroup>
+
 </Project>

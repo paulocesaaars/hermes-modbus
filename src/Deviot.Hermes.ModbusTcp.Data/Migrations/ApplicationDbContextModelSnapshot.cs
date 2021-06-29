@@ -22,10 +22,13 @@ namespace Deviot.Hermes.ModbusTcp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Administrator")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("Enabled")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
@@ -47,8 +50,9 @@ namespace Deviot.Hermes.ModbusTcp.Data.Migrations
                         new
                         {
                             Id = new Guid("7011423f-6514-4a2f-b1d7-98dec19cf466"),
+                            Administrator = true,
                             Enabled = true,
-                            Name = "Administrador",
+                            FullName = "Administrador",
                             Password = "C7AD44CBAD762A5DA0A452F9E854FDC1E0E7A52A38015F23F3EAB1D80B931DD472634DFAC71CD34EBC35D16AB7FB8A90C81F975113D6C7538DC69DD8DE9077EC",
                             UserName = "admin"
                         });

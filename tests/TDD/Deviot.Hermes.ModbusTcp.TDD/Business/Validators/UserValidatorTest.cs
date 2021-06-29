@@ -1,12 +1,14 @@
-﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
+﻿using Deviot.Common;
+using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Validators;
-using Deviot.Hermes.ModbusTcp.TDD.Extensions;
 using FluentValidation.TestHelper;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
 {
+    [ExcludeFromCodeCoverage]
     public class UserValidatorTest
     {
         private readonly UserValidator _userValidator;
@@ -19,29 +21,29 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
         [Fact(DisplayName = "Tamanho mínimo propriedade nome completo")]
         public void Name_ValidateMinimumLength()
         {
-            var name = TestUtils.GetGenericString(2);
+            var name = Utils.GenerateRandomString(2);
             var user = GetUser(name);
 
             var result = _userValidator.TestValidate(user);
 
-            result.ShouldHaveValidationErrorFor(x => x.Name);
+            result.ShouldHaveValidationErrorFor(x => x.FullName);
         }
 
         [Fact(DisplayName = "Tamanho máximo propriedade nome completo")]
         public void UserName_MaximumLength()
         {
-            var name = TestUtils.GetGenericString(151);
+            var name = Utils.GenerateRandomString(151);
             var user = GetUser(name);
 
             var result = _userValidator.TestValidate(user);
 
-            result.ShouldHaveValidationErrorFor(x => x.Name);
+            result.ShouldHaveValidationErrorFor(x => x.FullName);
         }
 
         [Fact(DisplayName = "Tamanho mínimo propriedade nome de usuário")]
         public void UserName_ValidateMinimumLength()
         {
-            var userName = TestUtils.GetGenericString(2);
+            var userName = Utils.GenerateRandomString(2);
             var user = GetUser(userName: userName);
 
             var result = _userValidator.TestValidate(user);
@@ -52,7 +54,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
         [Fact(DisplayName = "Tamanho máximo propriedade nome de usuário")]
         public void Name_MaximumLength()
         {
-            var userName = TestUtils.GetGenericString(21);
+            var userName = Utils.GenerateRandomString(21);
             var user = GetUser(userName: userName);
 
             var result = _userValidator.TestValidate(user);

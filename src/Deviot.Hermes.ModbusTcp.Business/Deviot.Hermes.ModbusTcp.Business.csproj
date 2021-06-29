@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Enumerators\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\common-library\src\Deviot.Common\Deviot.Common.csproj" />
   </ItemGroup>
 

@@ -1,31 +1,49 @@
-﻿using Deviot.Common;
-using Deviot.Hermes.ModbusTcp.Api.Controllers.Base;
+﻿using AutoMapper;
+using Deviot.Common;
+using Deviot.Hermes.ModbusTcp.Api.Bases;
+using Deviot.Hermes.ModbusTcp.Api.ModelViews;
 using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
 {
-    [Authorize]
     [Route("api/v{version:apiVersion}/auth")]
     public class AuthController : CustomControllerBase
     {
         private readonly IAuthService _authService;
 
-        public AuthController(INotifier notifier, IAuthService authService) : base(notifier)
+        public AuthController(INotifier notifier, 
+                              IMapper mapper, 
+                              ILogger<AuthController> logger, 
+                              IAuthService authService
+                             ) : base(notifier, mapper, logger)
         {
             _authService = authService;
         }
 
         [AllowAnonymous]
-        [HttpGet]
-        public async Task<ActionResult> LoginAsync()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpPost("login")]
+        public async Task<ActionResult> LoginAsync(LoginModelView loginModelView)
         {
-            var result = await _authService.LoginAsync(new Login("admin", "admin"));
-            return CustomResponse(result);
+            try
+            {
+                var login = _mapper.Map<Login>(loginModelView);
+                return CustomResponse(await _authService.LoginAsync(login));
+            }
+            catch (Exception exception)
+            {
+                return ReturnActionResultForGenericError(exception);
+            }
         }
     }
 }

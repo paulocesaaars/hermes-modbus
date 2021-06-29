@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Deviot.Hermes.ModbusTcp.Api.Filters;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Deviot.Hermes.ModbusTcp.Api.Configurations
 {
+    [ExcludeFromCodeCoverage]
+
     public static class ApiConfig
     {
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
@@ -13,7 +17,10 @@ namespace Deviot.Hermes.ModbusTcp.Api.Configurations
             // Configurações token
             services.AddJwtConfiguration(configuration);
 
-            // WebApi Config
+            // Configurações de filtro
+            services.AddMvc(options =>
+                options.Filters.Add(typeof(ControllerActionFilter)));
+
             services.AddControllers();
             return services;
         }

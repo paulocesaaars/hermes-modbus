@@ -13,7 +13,7 @@ namespace Deviot.Hermes.ModbusTcp.Data.Mapping
         {
             ConfigureBase<User>(builder, $"User");
 
-            builder.Property(o => o.Name)
+            builder.Property(o => o.FullName)
                 .HasColumnType("varchar(150)")
                 .IsRequired();
 

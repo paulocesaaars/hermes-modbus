@@ -3,10 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Deviot.Hermes.ModbusTcp.Api.Configurations
 {
+    [ExcludeFromCodeCoverage]
+
     public static class SwaggerConfig
     {
         public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)

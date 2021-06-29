@@ -2,10 +2,12 @@
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Business.Bases
 {
+    [ExcludeFromCodeCoverage]
     public class ValidatorBaseTest
     {
         [Fact(DisplayName = "Campo obrigatório propriedade Id")]

@@ -4,20 +4,28 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Deviot.Hermes.ModbusTcp.Api.Configurations
 {
+    [ExcludeFromCodeCoverage]
+
     public static class JwtConfig
     {
         private const string JWT_SETTINGS = nameof(JwtSettings);
-
+        private const string CONFIG_ERROR = "As configurações do token não foram informadas";
         public static IServiceCollection AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             // JWT Configurations
             var config = configuration.GetSection(JWT_SETTINGS);
             services.Configure<JwtSettings>(config);
             var jwtSettings = config.Get<JwtSettings>();
+
+            if (jwtSettings is null)
+                throw new Exception(CONFIG_ERROR);
+                
 
             var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
             services.AddAuthentication(options =>

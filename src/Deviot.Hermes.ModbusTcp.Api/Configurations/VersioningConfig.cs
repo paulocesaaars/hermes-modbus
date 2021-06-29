@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Deviot.Hermes.ModbusTcp.Api.Configurations
 {
+    [ExcludeFromCodeCoverage]
+
     public static class VersioningConfig
     {
         public static IServiceCollection AddVersioningConfiguration(this IServiceCollection services)

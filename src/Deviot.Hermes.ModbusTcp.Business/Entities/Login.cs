@@ -4,9 +4,9 @@ namespace Deviot.Hermes.ModbusTcp.Business.Entities
 {
     public class Login : EntityBase
     {
-        public string UserName { get; private set; }
+        public string UserName { get; protected set; }
 
-        public string Password { get; private set; }
+        public string Password { get; protected set; }
 
         public Login()
         {
