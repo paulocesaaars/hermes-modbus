@@ -1,5 +1,8 @@
-﻿namespace Deviot.Hermes.ModbusTcp.Business.Settings
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Deviot.Hermes.ModbusTcp.Business.Settings
 {
+    [ExcludeFromCodeCoverage]
     public class JwtSettings
     {
         public string Key { get; set; }

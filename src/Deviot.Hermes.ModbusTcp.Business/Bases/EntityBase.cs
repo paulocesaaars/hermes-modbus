@@ -15,5 +15,10 @@ namespace Deviot.Hermes.ModbusTcp.Business.Base
         {
             Id = id;
         }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

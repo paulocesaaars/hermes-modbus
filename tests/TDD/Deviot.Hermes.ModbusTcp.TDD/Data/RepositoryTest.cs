@@ -34,7 +34,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Data
         [Fact(DisplayName = "Adicionar")]
         public async Task Add_DeveRetornarUsuarioNovo()
         {
-            var newUser = UserFake.GetUserNormal();
+            var newUser = UserFake.GetUserPaulo();
 
             await _repository.AddAsync<User>(newUser);
 

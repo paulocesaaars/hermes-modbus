@@ -27,8 +27,13 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures.Business.Services
 
         private async Task PopulateDatabaseAsync()
         {
-            var user = UserFake.GetUserNormal();
-            await _repository.AddAsync<User>(user);
+            var paulo = UserFake.GetUserPaulo(true);
+            var bruna = UserFake.GetUserBruna(true);
+            var paula = UserFake.GetUserPaula(true);
+
+            await _repository.AddAsync<User>(paulo);
+            await _repository.AddAsync<User>(bruna);
+            await _repository.AddAsync<User>(paula);
         }
 
         private AuthService GetAuthService()
@@ -42,13 +47,22 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures.Business.Services
                                    loginValidator);
         }
 
-        public UserInfo GetUserAdmin() => UserInfoFake.GetUserAdmin();
+        public UserInfo GetUserInfoAdmin() => UserInfoFake.GetUserAdmin();
 
-        public UserInfo GetUserNormal() => UserInfoFake.GetUserNormal();
+        public User GetUserAdmin(bool encriptPassword = false) => UserFake.GetUserAdmin(encriptPassword);
+
+
+        public UserInfo GetUserInfoPaulo() => UserInfoFake.GetUserPaulo();
+
+        public User GetUserPaulo(bool encriptPassword = false) => UserFake.GetUserPaulo(encriptPassword);
+
+        public UserInfo GetUserInfoBruna() => UserInfoFake.GetUserBruna();
+
+        public UserInfo GetUserInfoPaula() => UserInfoFake.GetUserPaula();
 
         public UserService GetServiceWithLoggedAdmin()
         {
-            var user = GetUserAdmin();
+            var user = GetUserInfoAdmin();
             return GetService(user);
         }
 
@@ -56,7 +70,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures.Business.Services
         public UserService GetService(UserInfo loggedUser)
         {
             var authService = GetAuthService();
-            authService.SetLoggedUser(loggedUser);
+            authService.SetLoggedUser(loggedUser.Clone() as UserInfo);
             var userValidator = new UserValidator();
             var userInfoValidator = new UserInfoValidator();
             var userPasswordValidator = new UserPasswordValidator();

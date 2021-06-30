@@ -2,6 +2,7 @@
 using Deviot.Common;
 using Deviot.Hermes.ModbusTcp.Api.Bases;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +20,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         }
 
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         public ActionResult Get() => Ok();
     }

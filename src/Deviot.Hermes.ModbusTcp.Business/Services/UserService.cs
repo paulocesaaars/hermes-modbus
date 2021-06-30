@@ -24,7 +24,8 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
         private const string INVALID_PASSWORD = "Senha atual inválida";
         private const string USERNAME_ALREADY_EXISTS = "O nome de usuário informado já existe";
         private const string CHANGE_ANOTHER_USER_DATA = "Não é permitido alterar dados de outro usuário";
-        private const string CHANGE_A_USER_TO_ADMINISTRATOR = "Somente um administrador pode criar ou alterar um usuário administrador";
+        private const string CHANGE_USER_TO_ADMINISTRATOR = "Somente um administrador pode criar ou alterar um usuário administrador";
+        private const string INSERT_OR_DELETE_USER_AUTHORIZATION = "Somente um administrador pode criar ou deletar um usuário";
         private const string DELETE_ADMINISTRATOR_LIMITS = "Não é possivel deletar todos os usuários administradores";
 
         public UserService(INotifier notifier, 
@@ -42,29 +43,45 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             _userPasswordValidator = userPasswordValidator;
         }
 
-        private bool CheckAuthorizationForUpdate(Guid id)
+        private bool CheckInsertOrDeleteAuthorization()
         {
             var loggedUser = _authService.GetLoggedUser();
-            if (loggedUser.Id == id || loggedUser.Administrator)
+            if (loggedUser.Administrator)
                 return true;
+
+            NotifyUnauthorized(INSERT_OR_DELETE_USER_AUTHORIZATION);
+            return false;
+        }
+
+        private bool CheckUpdateUserAuthorization(UserInfo user)
+        {
+            var loggedUser = _authService.GetLoggedUser();
+            if (loggedUser.Administrator)
+                return true;
+
+            if (user.Id == loggedUser.Id)
+            {
+                if(user.Administrator)
+                {
+                    NotifyUnauthorized(CHANGE_USER_TO_ADMINISTRATOR);
+                    return false;
+                }
+
+                return true;
+            }
 
             NotifyUnauthorized(CHANGE_ANOTHER_USER_DATA);
             return false;
         }
 
-        private bool CheckAuthorizationForUpdateAdministrator(UserInfo userInfo)
+        private bool CheckUpdatePasswordAuthorization(Guid userId)
         {
-            if(userInfo.Administrator)
-            {
-                var loggedUser = _authService.GetLoggedUser();
-                if (loggedUser.Administrator)
-                    return true;
+            var loggedUser = _authService.GetLoggedUser();
+            if (loggedUser.Id == userId)
+                return true;
 
-                NotifyUnauthorized(CHANGE_A_USER_TO_ADMINISTRATOR);
-                return false;
-            }
-
-            return true;
+            NotifyUnauthorized(CHANGE_ANOTHER_USER_DATA);
+            return false;
         }
 
         private async Task<bool> CheckUserNameExistAsync(UserInfo user)
@@ -129,7 +146,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                 var valid = ValidateEntity<User>(_userValidator, user);
                 if (valid)
                 {
-                    if (CheckAuthorizationForUpdateAdministrator(user))
+                    if (CheckInsertOrDeleteAuthorization())
                     {
                         var check = await CheckUserNameExistAsync(user.UserName);
 
@@ -159,7 +176,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                 var valid = ValidateEntity<UserInfo>(_userInfoValidator, userInfo);
                 if (valid)
                 {
-                    if(CheckAuthorizationForUpdate(userInfo.Id) && CheckAuthorizationForUpdateAdministrator(userInfo))
+                    if(CheckUpdateUserAuthorization(userInfo))
                     {
                         var user = await _repository.Get<User>()
                                                     .FirstOrDefaultAsync(x => x.Id == userInfo.Id);
@@ -196,26 +213,29 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            var user = await _repository.Get<User>()
+            if (CheckInsertOrDeleteAuthorization())
+            {
+                var user = await _repository.Get<User>()
                                         .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (user is null)
-            {
-                NotifyNotFound(USER_NOT_FOUND);
-                return;
-            }
-                
-            if(user.Administrator)
-            {
-                var count = await _repository.Get<User>().CountAsync(x => x.Administrator);
-                if(count == 1)
+                if (user is null)
                 {
-                    NotifyUnauthorized(DELETE_ADMINISTRATOR_LIMITS);
+                    NotifyNotFound(USER_NOT_FOUND);
                     return;
-                }    
-            }
+                }
 
-            await _repository.DeleteAsync<User>(user);
+                if (user.Administrator)
+                {
+                    var count = await _repository.Get<User>().CountAsync(x => x.Administrator);
+                    if (count == 1)
+                    {
+                        NotifyUnauthorized(DELETE_ADMINISTRATOR_LIMITS);
+                        return;
+                    }
+                }
+
+                await _repository.DeleteAsync<User>(user);
+            }
         }
 
         public async Task ChangePasswordAsync(UserPassword userPassword)
@@ -225,26 +245,19 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                 var valid = ValidateEntity<UserPassword>(_userPasswordValidator, userPassword);
                 if (valid)
                 {
-                    if (CheckAuthorizationForUpdate(userPassword.Id))
+                    if (CheckUpdatePasswordAuthorization(userPassword.Id))
                     {
                         var user = await _repository.Get<User>()
                                                     .FirstOrDefaultAsync(x => x.Id == userPassword.Id);
 
-                        if (user is not null)
+                        if (user.Password == Utils.Encript(userPassword.Password))
                         {
-                            if(user.Password == Utils.Encript(userPassword.Password))
-                            {
-                                user.SetPassword(Utils.Encript(userPassword.NewPassword));
-                                await _repository.EditAsync<User>(user);
-                            }
-                            else
-                            {
-                                NotifyForbidden(INVALID_PASSWORD);
-                            }
+                            user.SetPassword(Utils.Encript(userPassword.NewPassword));
+                            await _repository.EditAsync<User>(user);
                         }
                         else
                         {
-                            NotifyNotFound(USER_NOT_FOUND);
+                            NotifyForbidden(INVALID_PASSWORD);
                         }
                     }
                 }

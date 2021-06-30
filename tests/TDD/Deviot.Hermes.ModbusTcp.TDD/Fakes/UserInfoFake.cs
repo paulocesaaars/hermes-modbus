@@ -17,7 +17,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fakes
                                      true);
         }
 
-        public static UserInfo GetUserNormal()
+        public static UserInfo GetUserPaulo()
         {
             return new UserInfo(new Guid("e1386eb28ae443e9a13855ce66ebce7d"),
                                      "Paulo Cesar de Souza",
@@ -26,11 +26,30 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fakes
                                      false);
         }
 
+        public static UserInfo GetUserBruna()
+        {
+            return new UserInfo(new Guid("630994d9e6c34d5cb823569560697d67"),
+                                     "Bruna Stefano Marques",
+                                     "bruna",
+                                     true,
+                                     false);
+        }
+
+        public static UserInfo GetUserPaula()
+        {
+            return new UserInfo(new Guid("f22e81455a6f4961922a516c54d33dba"),
+                                     "Paula Stefano Souza",
+                                     "paula",
+                                     true,
+                                     false);
+        }
+
         public static IEnumerable<UserInfo> GetUsers()
         {
             var users = new List<UserInfo>(2);
             users.Add(GetUserAdmin());
-            users.Add(GetUserNormal());
+            users.Add(GetUserPaulo());
+            users.Add(GetUserBruna());
 
             return users;
         }

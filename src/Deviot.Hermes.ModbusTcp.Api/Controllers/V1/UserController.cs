@@ -30,6 +30,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("{id}")]
@@ -49,6 +50,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         public async Task<ActionResult<UserInfoModelView>> GetAllAsync(int take = 1000, int skip = 0)
@@ -148,6 +150,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("check-username/{username}")]
         public async Task<ActionResult<bool>> CheckUserNameExistAsync(string username)
@@ -165,6 +168,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("total-registers")]
         public async Task<ActionResult<long>> TotalRegistersAsync()

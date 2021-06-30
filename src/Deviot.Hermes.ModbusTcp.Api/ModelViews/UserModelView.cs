@@ -5,17 +5,17 @@ namespace Deviot.Hermes.ModbusTcp.Api.ModelViews
     public class UserModelView
     {
         [Required]
-        [MinLength(3)]
+        [MinLength(5)]
         [MaxLength(150)]
         public string FullName { get; set; }
 
         [Required]
-        [MinLength(3)]
+        [MinLength(5)]
         [MaxLength(20)]
         public string UserName { get; set; }
 
         [Required]
-        [MinLength(3)]
+        [MinLength(5)]
         [MaxLength(10)]
         public string Password { get; set; }
 
