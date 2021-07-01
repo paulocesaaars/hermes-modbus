@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures.Business.Services
+namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures
 {
     [ExcludeFromCodeCoverage]
     [CollectionDefinition(nameof(UserServiceCollection))]

@@ -112,15 +112,12 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("que tenho um username e senha válidos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 6
-testRunner.When("executar a url de login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.When("executar a url de login via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 7
-testRunner.And("passar as informações via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 8
 testRunner.Then("A api retornará um stutus code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
-#line 9
+#line 8
 testRunner.And("um token de acesso valido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
@@ -135,7 +132,7 @@ testRunner.And("um token de acesso valido", ((string)(null)), ((TechTalk.SpecFlo
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negar token de acesso", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 11
+#line 10
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -155,20 +152,17 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 12
+#line 11
 testRunner.Given("que tenho um username ou senha invalido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
+#line 12
+testRunner.When("executar a url de login via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
 #line 13
-testRunner.When("executar a url de login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.Then("A api retornará um stutus code 404", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 14
-testRunner.And("passar as informações via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 15
-testRunner.Then("A api retornará um stutus code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
-#line hidden
-#line 16
-testRunner.And("uma mensagem de erro: usuário ou senha inválidos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("uma mensagem de erro: \'Usuário ou senha inválidos.\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();

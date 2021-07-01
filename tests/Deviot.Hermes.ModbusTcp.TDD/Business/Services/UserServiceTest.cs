@@ -1,6 +1,5 @@
-﻿using Deviot.Common;
-using Deviot.Hermes.ModbusTcp.Business.Entities;
-using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Business.Services;
+﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
+using Deviot.Hermes.ModbusTcp.TDD.Fixtures;
 using FluentAssertions;
 using System;
 using System.Diagnostics.CodeAnalysis;

@@ -28,6 +28,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Configurations
                 
 
             var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
