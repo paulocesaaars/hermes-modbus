@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Deviot.Common;
 using Deviot.Hermes.ModbusTcp.Api.Bases;
-using Deviot.Hermes.ModbusTcp.Api.ModelViews;
-using Deviot.Hermes.ModbusTcp.Api.ModelViews.Bases;
+using Deviot.Hermes.ModbusTcp.Api.ViewModels;
+using Deviot.Hermes.ModbusTcp.Api.ViewModels.Bases;
 using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -34,12 +34,12 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserInfoModelView>> GetAsync(Guid id)
+        public async Task<ActionResult<UserInfoViewModel>> GetAsync(Guid id)
         {
             try
             {
                 var user = await _userService.GetAsync(id);
-                var userModelView = _mapper.Map<UserInfoModelView>(user);
+                var userModelView = _mapper.Map<UserInfoViewModel>(user);
 
                 return CustomResponse(userModelView);
             }
@@ -53,12 +53,12 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        public async Task<ActionResult<UserInfoModelView>> GetAllAsync(int take = 1000, int skip = 0)
+        public async Task<ActionResult<UserInfoViewModel>> GetAllAsync(int take = 1000, int skip = 0)
         {
             try
             {
                 var users = await _userService.GetAllAsync(take, skip);
-                var usersModelView = _mapper.Map<IEnumerable<UserInfoModelView>>(users);
+                var usersModelView = _mapper.Map<IEnumerable<UserInfoViewModel>>(users);
 
                 return CustomResponse(usersModelView);
             }
@@ -74,7 +74,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] UserModelView userModelView)
+        public async Task<ActionResult> PostAsync([FromBody] UserViewModel userModelView)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
-        public async Task<ActionResult> PutAsync([FromBody] UserInfoModelView userModelView)
+        public async Task<ActionResult> PutAsync([FromBody] UserInfoViewModel userModelView)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut("change-password")]
-        public async Task<ActionResult> ChangePasswordAsync([FromBody] UserPasswordModelView userPasswordModelView)
+        public async Task<ActionResult> ChangePasswordAsync([FromBody] UserPasswordViewModel userPasswordModelView)
         {
             try
             {

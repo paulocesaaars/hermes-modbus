@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures.Bases
+namespace Deviot.Hermes.ModbusTcp.TDD.Bases
 {
     [ExcludeFromCodeCoverage]
     public abstract class ServiceFixtureBase

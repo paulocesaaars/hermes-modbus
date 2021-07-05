@@ -1,8 +1,8 @@
 ﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Services;
 using Deviot.Hermes.ModbusTcp.Business.Validators;
+using Deviot.Hermes.ModbusTcp.TDD.Bases;
 using Deviot.Hermes.ModbusTcp.TDD.Fakes;
-using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Bases;
 using Deviot.Hermes.ModbusTcp.TDD.Helpers;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -18,6 +18,11 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures
 
     public class AuthServiceFixture : ServiceFixtureBase, IDisposable
     {
+        public AuthServiceFixture()
+        {
+
+        }
+
         public AuthService GetService()
         {
             var loginValidator = new LoginValidator();
@@ -29,11 +34,17 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures
                                    loginValidator);
         }
 
-        public Login GetLoginAdmin() => new Login("admin", "admin");
+        public Login GetLoginAdmin()
+        {
+            var userAdmin = UserFake.GetUserAdmin();
+            return new Login(userAdmin.UserName, userAdmin.Password);
+        }
+            
 
         public Login GetInvalidLogin() => new Login("invalido", "123");
 
-        public UserInfo GetUserInfoAdmin() => UserInfoFake.GetUserAdmin();
+        public UserInfo GetUserInfoAdmin() => UserFake.GetUserAdmin();
+        
 
         public Token GetTokenAdmin() => TokenHelper.GetToken(GetUserInfoAdmin());
 

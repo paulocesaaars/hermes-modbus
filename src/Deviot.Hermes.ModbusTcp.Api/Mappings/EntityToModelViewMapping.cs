@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Deviot.Hermes.ModbusTcp.Api.ModelViews;
+using Deviot.Hermes.ModbusTcp.Api.ViewModels;
 using Deviot.Hermes.ModbusTcp.Business.Entities;
 
 namespace Deviot.Hermes.ModbusTcp.Api.Mappings
@@ -10,10 +10,10 @@ namespace Deviot.Hermes.ModbusTcp.Api.Mappings
         {
             AllowNullCollections = true;
 
-            CreateMap<Token, TokenModelView>();
+            CreateMap<Token, TokenViewModel>();
 
-            CreateMap<User, UserModelView>();
-            CreateMap<UserInfo, UserInfoModelView>();
+            CreateMap<User, UserViewModel>();
+            CreateMap<UserInfo, UserInfoViewModel>();
         }
     }
 }

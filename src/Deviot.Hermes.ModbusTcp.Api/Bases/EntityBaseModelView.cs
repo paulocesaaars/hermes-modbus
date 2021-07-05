@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Deviot.Hermes.ModbusTcp.Api.ModelViews.Bases
+namespace Deviot.Hermes.ModbusTcp.Api.ViewModels.Bases
 {
     [ExcludeFromCodeCoverage]
 

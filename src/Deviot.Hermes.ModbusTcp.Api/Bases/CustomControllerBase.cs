@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Deviot.Common;
-using Deviot.Hermes.ModbusTcp.Api.Models;
+using Deviot.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

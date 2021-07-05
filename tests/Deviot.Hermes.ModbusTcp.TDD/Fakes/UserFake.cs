@@ -1,7 +1,6 @@
 ﻿using Deviot.Common;
 using Deviot.Hermes.ModbusTcp.Business.Entities;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Fakes
@@ -29,38 +28,6 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fakes
                                      passwordEncript ? Utils.Encript(password) : password,
                                      true,
                                      false);
-        }
-
-        public static User GetUserBruna(bool passwordEncript = false)
-        {
-            var password = "123456";
-            return new User(new Guid("630994d9e6c34d5cb823569560697d67"),
-                                     "Bruna Stefano Marques",
-                                     "bruna",
-                                     passwordEncript ? Utils.Encript(password) : password,
-                                     true,
-                                     false);
-        }
-
-        public static User GetUserPaula(bool passwordEncript = false)
-        {
-            var password = "123456";
-            return new User(new Guid("f22e81455a6f4961922a516c54d33dba"),
-                                     "Paula Stefano Souza",
-                                     "paula",
-                                     passwordEncript ? Utils.Encript(password) : password,
-                                     true,
-                                     false);
-        }
-
-        public static IEnumerable<User> GetUsers(bool passwordEncript = false)
-        {
-            var users = new List<User>(2);
-            users.Add(GetUserAdmin(passwordEncript));
-            users.Add(GetUserPaulo(passwordEncript));
-            users.Add(GetUserBruna(passwordEncript));
-
-            return users;
         }
     }
 }

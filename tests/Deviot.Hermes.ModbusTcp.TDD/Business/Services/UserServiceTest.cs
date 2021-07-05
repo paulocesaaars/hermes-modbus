@@ -234,7 +234,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Atualizar outro usuário - Erro de autorização")]
         public async Task UpdateUserExistingUsername()
         {
-            var user = _userServiceFixture.GetUserInfoBruna();
+            var user = _userServiceFixture.GetUserBruna(true);
             var loggedUser = _userServiceFixture.GetUserInfoPaulo();
             var userService = _userServiceFixture.GetService(loggedUser);
 

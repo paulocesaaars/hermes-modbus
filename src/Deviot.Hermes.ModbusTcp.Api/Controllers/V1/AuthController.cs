@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Deviot.Common;
 using Deviot.Hermes.ModbusTcp.Api.Bases;
-using Deviot.Hermes.ModbusTcp.Api.ModelViews;
+using Deviot.Hermes.ModbusTcp.Api.ViewModels;
 using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -33,12 +33,13 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("login")]
-        public async Task<ActionResult> LoginAsync(LoginModelView loginModelView)
+        public async Task<ActionResult<TokenViewModel>> LoginAsync(LoginViewModel loginModelView)
         {
             try
             {
                 var login = _mapper.Map<Login>(loginModelView);
-                return CustomResponse(await _authService.LoginAsync(login));
+                var tokenViewModel = _mapper.Map<TokenViewModel>(await _authService.LoginAsync(login));
+                return CustomResponse(tokenViewModel);
             }
             catch (Exception exception)
             {

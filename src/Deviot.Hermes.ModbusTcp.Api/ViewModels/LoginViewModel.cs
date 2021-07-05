@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Deviot.Hermes.ModbusTcp.Api.ModelViews
+namespace Deviot.Hermes.ModbusTcp.Api.ViewModels
 {
-    public class LoginModelView
+    public class LoginViewModel
     {
         [Required]
         [MinLength(5)]

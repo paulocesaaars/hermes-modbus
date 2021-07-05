@@ -16,6 +16,11 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Fixtures
 
     public class IntegrationTestFixture<TStartup> : IDisposable where TStartup : class
     {
+        private const string TOKEN_ERROR = "O token não foi informado";
+        private const string MEDIA_TYPE = "application/json";
+        private const string ENVIRONMENT = "Testing";
+        private const string TOKEN_SCHEME = "Bearer";
+
         public TestServer Server { get; private set; }
 
         public HttpClient Client { get; private set; }
@@ -31,7 +36,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Fixtures
             };
 
             var builder = new WebHostBuilder().UseStartup<Startup>()
-                                              .UseEnvironment("Development");
+                                              .UseEnvironment(ENVIRONMENT);
 
             Server = new TestServer(builder)
             {
@@ -44,11 +49,11 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Fixtures
         public void AddToken(string token)
         {
             if (string.IsNullOrEmpty(token))
-                throw new InvalidOperationException("O token não foi informado");
+                throw new InvalidOperationException(TOKEN_ERROR);
 
             Client.DefaultRequestHeaders.Clear();
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MEDIA_TYPE));
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(TOKEN_SCHEME, token);
         }
 
         public void Dispose()

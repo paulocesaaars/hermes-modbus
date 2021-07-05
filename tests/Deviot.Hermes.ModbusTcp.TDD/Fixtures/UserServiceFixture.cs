@@ -1,10 +1,12 @@
-﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
+﻿using Deviot.Common;
+using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Services;
 using Deviot.Hermes.ModbusTcp.Business.Validators;
+using Deviot.Hermes.ModbusTcp.TDD.Bases;
 using Deviot.Hermes.ModbusTcp.TDD.Fakes;
-using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Bases;
 using Deviot.Hermes.ModbusTcp.TDD.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
@@ -27,9 +29,9 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures
 
         private async Task PopulateDatabaseAsync()
         {
-            var paulo = UserFake.GetUserPaulo(true);
-            var bruna = UserFake.GetUserBruna(true);
-            var paula = UserFake.GetUserPaula(true);
+            var paulo = GetUserPaulo(true);
+            var bruna = GetUserBruna(true);
+            var paula = GetUserPaula(true);
 
             await _repository.AddAsync<User>(paulo);
             await _repository.AddAsync<User>(bruna);
@@ -47,18 +49,75 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures
                                    loginValidator);
         }
 
-        public UserInfo GetUserInfoAdmin() => UserInfoFake.GetUserAdmin();
+        public User GetUserAdmin(bool passwordEncript = false) => UserFake.GetUserAdmin(passwordEncript);
 
-        public User GetUserAdmin(bool encriptPassword = false) => UserFake.GetUserAdmin(encriptPassword);
+        public User GetUserPaulo(bool passwordEncript = false) => UserFake.GetUserPaulo(passwordEncript);
 
+        public User GetUserBruna(bool passwordEncript = false)
+        {
+            var password = "123456";
+            return new User(new Guid("630994d9e6c34d5cb823569560697d67"),
+                                     "Bruna Stefano Marques",
+                                     "bruna",
+                                     passwordEncript ? Utils.Encript(password) : password,
+                                     true,
+                                     false);
+        }
 
-        public UserInfo GetUserInfoPaulo() => UserInfoFake.GetUserPaulo();
+        public User GetUserPaula(bool passwordEncript = false)
+        {
+            var password = "123456";
+            return new User(new Guid("f22e81455a6f4961922a516c54d33dba"),
+                                     "Paula Stefano Souza",
+                                     "paula",
+                                     passwordEncript ? Utils.Encript(password) : password,
+                                     true,
+                                     false);
+        }
 
-        public User GetUserPaulo(bool encriptPassword = false) => UserFake.GetUserPaulo(encriptPassword);
+        public UserInfo GetUserInfoAdmin() => UserFake.GetUserAdmin();
 
-        public UserInfo GetUserInfoBruna() => UserInfoFake.GetUserBruna();
+        public UserInfo GetUserInfoPaulo() => UserFake.GetUserPaulo();
 
-        public UserInfo GetUserInfoPaula() => UserInfoFake.GetUserPaula();
+        public UserInfo GetUserInfoBruna()
+        {
+            return new UserInfo(new Guid("630994d9e6c34d5cb823569560697d67"),
+                                     "Bruna Stefano Marques",
+                                     "bruna",
+                                     true,
+                                     false);
+        }
+
+        public UserInfo GetUserInfoPaula()
+        {
+            return new UserInfo(new Guid("f22e81455a6f4961922a516c54d33dba"),
+                                     "Paula Stefano Souza",
+                                     "paula",
+                                     true,
+                                     false);
+        }
+
+        public IEnumerable<UserInfo> GetUserInfoAll()
+        {
+            var users = new List<UserInfo>(4);
+            users.Add(GetUserInfoAdmin());
+            users.Add(GetUserInfoPaulo());
+            users.Add(GetUserInfoBruna());
+            users.Add(GetUserInfoPaula());
+
+            return users;
+        }
+
+        public IEnumerable<User> GetUserAll(bool passwordEncript = false)
+        {
+            var users = new List<User>(4);
+            users.Add(GetUserAdmin(passwordEncript));
+            users.Add(GetUserPaulo(passwordEncript));
+            users.Add(GetUserBruna(passwordEncript));
+            users.Add(GetUserPaula(passwordEncript));
+
+            return users;
+        }
 
         public UserService GetServiceWithLoggedAdmin()
         {

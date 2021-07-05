@@ -9,9 +9,11 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Helpers
     [ExcludeFromCodeCoverage]
     public static class RepositoryHelper
     {
+        private const string CONNECTION_STRING = "Data Source=:memory:";
+
         private static ApplicationDbContext CreateContext()
         {
-            var connection = new SqliteConnection("Data Source=:memory:");
+            var connection = new SqliteConnection(CONNECTION_STRING);
             connection.Open();
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                                 .UseSqlite(connection)

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Deviot.Hermes.ModbusTcp.Api.ModelViews
+namespace Deviot.Hermes.ModbusTcp.Api.ViewModels
 {
-    public class UserInfoModelView
+    public class UserInfoViewModel
     {
         [Required]
         public Guid Id { get; set; }
