@@ -11,7 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures
+namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures.Services
 {
     [ExcludeFromCodeCoverage]
     [CollectionDefinition(nameof(UserServiceCollection))]

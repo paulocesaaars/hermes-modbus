@@ -8,7 +8,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures
+namespace Deviot.Hermes.ModbusTcp.TDD.Fixtures.Services
 {
     [ExcludeFromCodeCoverage]
     [CollectionDefinition(nameof(AuthServiceCollection))]

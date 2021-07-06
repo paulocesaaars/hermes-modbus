@@ -88,6 +88,11 @@ namespace Deviot.Hermes.ModbusTcp.Api.Bases
                     httpStatusCode = HttpStatusCode.NoContent;
                     messages.Add(notifies.First(x => x.Type == HttpStatusCode.NoContent).Message);
                 }
+                else if (notifies.Any(x => x.Type == HttpStatusCode.Created))
+                {
+                    httpStatusCode = HttpStatusCode.Created;
+                    messages.Add(notifies.First(x => x.Type == HttpStatusCode.Created).Message);
+                }
 
                 return GenerateContentResult(httpStatusCode, messages, value);
             }

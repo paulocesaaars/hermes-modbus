@@ -35,43 +35,43 @@ namespace Deviot.Hermes.ModbusTcp.Business.Bases
             return false;
         }
 
-        protected virtual void NotifyOk(string message)
+        public virtual void NotifyOk(string message)
         {
             _logger.LogInformation(message);
             _notifier.Notify(HttpStatusCode.OK, message);
         }
 
-        protected virtual void NotifyCreated(string message)
+        public virtual void NotifyCreated(string message)
         {
             _logger.LogInformation(message);
             _notifier.Notify(HttpStatusCode.Created, message);
         }
 
-        protected virtual void NotifyNoContent(string message)
+        public virtual void NotifyNoContent(string message)
         {
             _logger.LogInformation(message);
             _notifier.Notify(HttpStatusCode.NoContent, message);
         }
 
-        protected virtual void NotifyForbidden(string message)
+        public virtual void NotifyForbidden(string message)
         {
             _logger.LogWarning(message);
             _notifier.Notify(HttpStatusCode.Forbidden, message);
         }
 
-        protected virtual void NotifyNotFound(string message)
+        public virtual void NotifyNotFound(string message)
         {
             _logger.LogWarning(message);
             _notifier.Notify(HttpStatusCode.NotFound, message);
         }
 
-        protected virtual void NotifyUnauthorized(string message)
+        public virtual void NotifyUnauthorized(string message)
         {
             _logger.LogError(message);
             _notifier.Notify(HttpStatusCode.Unauthorized, message);
         }
 
-        protected virtual void NotifyInternalServerError(Exception exception)
+        public virtual void NotifyInternalServerError(Exception exception)
         {
             var messages = Utils.GetAllExceptionMessages(exception);
 

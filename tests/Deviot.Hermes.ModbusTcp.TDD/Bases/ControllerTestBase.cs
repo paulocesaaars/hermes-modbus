@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Deviot.Common;
+using Deviot.Common.Models;
 using Deviot.Hermes.ModbusTcp.Api.Mappings;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Moq.AutoMock;
 using System.Diagnostics.CodeAnalysis;
 
@@ -12,30 +11,50 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Bases
     [ExcludeFromCodeCoverage]
     public abstract class ControllerTestBase
     {
-        protected AutoMocker Mocker { get; set; }
+        protected readonly INotifier _notifier;
+
+        protected readonly IMapper _mapper;
+
+        protected readonly AutoMocker _mocker;
+
+        protected const string INTERNAL_ERROR_MESSAGE = "A requisição não foi executada, houve um erro interno";
 
         protected ControllerTestBase()
         {
+            _notifier = new Notifier();
+
             var mappingConfig = new MapperConfiguration(options =>
             {
                 options.AddProfile(new EntityToModelViewMapping());
                 options.AddProfile(new ModelViewToEntityMapping());
             });
-            var mapper = mappingConfig.CreateMapper();
+            _mapper = mappingConfig.CreateMapper();
 
-            Mocker = new AutoMocker();
-            Mocker.Use<INotifier>(new Notifier());
-            Mocker.Use<IMapper>(mapper);
+            _mocker = new AutoMocker();
+            _mocker.Use<INotifier>(_notifier);
+            _mocker.Use<IMapper>(_mapper);
         }
 
-        protected ILogger<T> GetLogger<T>()
+        protected GenericActionResult<T> GetGenericActionResult<T>(ActionResult<T> actionResult)
         {
-            return new NullLogger<T>();
+            var contentResult = actionResult.Result as ContentResult;
+            return Utils.Deserializer<GenericActionResult<T>>(contentResult.Content);
         }
 
-        //protected static T GetValueResponse<T>(ContentResult result)
-        //{
+        protected GenericActionResult<object> GetGenericActionResult(ActionResult actionResult)
+        {
+            var contentResult = actionResult as ContentResult;
+            return Utils.Deserializer<GenericActionResult<object>>(contentResult.Content);
+        }
 
-        //}
+        protected int? GetHttpStatusCode<T>(ActionResult<T> actionResult)
+        {
+            return (actionResult.Result as ContentResult).StatusCode;
+        }
+
+        protected int? GetHttpStatusCode(ActionResult actionResult)
+        {
+            return (actionResult as ContentResult).StatusCode;
+        }
     }
 }

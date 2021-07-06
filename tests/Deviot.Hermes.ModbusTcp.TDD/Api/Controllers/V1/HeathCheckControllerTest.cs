@@ -11,7 +11,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         [Fact]
         public void Get_ReturnOk()
         {
-            var controller = Mocker.CreateInstance<HeathCheckController>();
+            var controller = _mocker.CreateInstance<HeathCheckController>();
 
             var result = controller.Get();
 
