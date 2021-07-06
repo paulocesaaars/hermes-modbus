@@ -39,8 +39,11 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
             try
             {
                 var user = await _userService.GetAsync(id);
-                var userModelView = _mapper.Map<UserInfoViewModel>(user);
 
+                if (_notifier.HasNotifications)
+                    return CustomResponse();
+
+                var userModelView = _mapper.Map<UserInfoViewModel>(user);
                 return CustomResponse(userModelView);
             }
             catch (Exception exception)
@@ -59,11 +62,10 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
             {
                 var users = await _userService.GetAllAsync(take, skip);
 
-                if (users is null)
+                if (_notifier.HasNotifications)
                     return CustomResponse();
 
                 var usersModelView = _mapper.Map<IEnumerable<UserInfoViewModel>>(users);
-
                 return CustomResponse(usersModelView);
             }
             catch (Exception exception)
@@ -96,6 +98,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
         public async Task<ActionResult> PutAsync([FromBody] UserInfoViewModel userModelView)
@@ -157,11 +160,14 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("check-username/{username}")]
-        public async Task<ActionResult<bool>> CheckUserNameExistAsync(string username)
+        public async Task<ActionResult<bool?>> CheckUserNameExistAsync(string username)
         {
             try
             {
                 var result = await _userService.CheckUserNameExistAsync(username);
+
+                if (_notifier.HasNotifications)
+                    return CustomResponse();
 
                 return CustomResponse(result);
             }
@@ -175,11 +181,14 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("total-registers")]
-        public async Task<ActionResult<long>> TotalRegistersAsync()
+        public async Task<ActionResult<long?>> TotalRegistersAsync()
         {
             try
             {
                 var result = await _userService.TotalRegistersAsync();
+
+                if (_notifier.HasNotifications)
+                    return CustomResponse();
 
                 return CustomResponse(result);
             }

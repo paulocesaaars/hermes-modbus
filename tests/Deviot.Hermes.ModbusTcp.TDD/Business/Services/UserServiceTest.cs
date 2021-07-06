@@ -156,7 +156,10 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
             var result = await userService.GetAsync(user.Id);
 
             result.Should().BeEquivalentTo(user);
-            _userServiceFixture.HasNotifications.Should().BeFalse();
+            _userServiceFixture.Notifications
+                               .Any(x => x.Type == HttpStatusCode.OK)
+                               .Should()
+                               .BeTrue();
         }
 
         [Fact(DisplayName = "Atualizar seu usuário - Erro de validação")]
@@ -228,7 +231,10 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
             var result = await userService.GetAsync(user.Id);
 
             result.Should().BeEquivalentTo(user);
-            _userServiceFixture.HasNotifications.Should().BeFalse();
+            _userServiceFixture.Notifications
+                               .Any(x => x.Type == HttpStatusCode.OK)
+                               .Should()
+                               .BeTrue();
         }
 
         [Fact(DisplayName = "Atualizar outro usuário - Erro de autorização")]

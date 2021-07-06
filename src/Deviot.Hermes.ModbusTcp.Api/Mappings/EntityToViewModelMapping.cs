@@ -4,15 +4,14 @@ using Deviot.Hermes.ModbusTcp.Business.Entities;
 
 namespace Deviot.Hermes.ModbusTcp.Api.Mappings
 {
-    public class EntityToModelViewMapping : Profile
+    public class EntityToViewModelMapping : Profile
     {
-        public EntityToModelViewMapping()
+        public EntityToViewModelMapping()
         {
             AllowNullCollections = true;
 
             CreateMap<Token, TokenViewModel>();
 
-            CreateMap<User, UserViewModel>();
             CreateMap<UserInfo, UserInfoViewModel>();
         }
     }

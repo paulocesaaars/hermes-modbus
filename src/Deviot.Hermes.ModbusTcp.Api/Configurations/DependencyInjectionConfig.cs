@@ -37,8 +37,8 @@ namespace Deviot.Hermes.ModbusTcp.Api.Configurations
             services.AddScoped<INotifier, Notifier>();
 
             // Automapper
-            services.AddAutoMapper(typeof(EntityToModelViewMapping),
-                                   typeof(ModelViewToEntityMapping));
+            services.AddAutoMapper(typeof(EntityToViewModelMapping),
+                                   typeof(ViewModelToEntityMapping));
 
             // Validations
             services.AddScoped<IValidator<Login>>(v => new LoginValidator());

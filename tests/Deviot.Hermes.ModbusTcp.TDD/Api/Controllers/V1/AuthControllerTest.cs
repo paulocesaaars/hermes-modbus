@@ -56,7 +56,6 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 
-            _notifier.HasNotifications.Should().BeTrue();
             statusCode.Should().Be((int)HttpStatusCode.Forbidden);
             result.Data.Should().BeNull();
         }
@@ -72,7 +71,6 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 
-            _notifier.HasNotifications.Should().BeTrue();
             statusCode.Should().Be((int)HttpStatusCode.NotFound);
             result.Data.Should().BeNull();
         }
@@ -88,7 +86,6 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 
-            _notifier.HasNotifications.Should().BeTrue();
             statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
             result.Data.Should().BeNull();
         }

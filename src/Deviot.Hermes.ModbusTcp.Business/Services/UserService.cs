@@ -20,6 +20,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
         private readonly IValidator<UserPassword> _userPasswordValidator;
 
         private const string USER_CREATED = "O usuário foi criado com sucesso";
+        private const string USER_UPDATED = "O usuário foi atualizado com sucesso";
         private const string USER_NOT_FOUND = "O usuário não foi encontrado";
         private const string INVALID_PASSWORD = "Senha atual inválida";
         private const string USERNAME_ALREADY_EXISTS = "O nome de usuário informado já existe";
@@ -196,6 +197,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                                 user.SetAdministrator(userInfo.Administrator);
 
                                 await _repository.EditAsync<User>(user);
+                                NotifyOk(USER_UPDATED);
                             }
                         }
                         else

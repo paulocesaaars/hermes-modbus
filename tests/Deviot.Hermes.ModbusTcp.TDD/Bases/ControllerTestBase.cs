@@ -17,7 +17,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Bases
 
         protected readonly AutoMocker _mocker;
 
-        protected const string INTERNAL_ERROR_MESSAGE = "A requisição não foi executada, houve um erro interno";
+        protected const string INTERNAL_ERROR_MESSAGE = "A requisição não foi executada com sucesso, erro não identificado";
 
         protected ControllerTestBase()
         {
@@ -25,8 +25,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Bases
 
             var mappingConfig = new MapperConfiguration(options =>
             {
-                options.AddProfile(new EntityToModelViewMapping());
-                options.AddProfile(new ModelViewToEntityMapping());
+                options.AddProfile(new EntityToViewModelMapping());
+                options.AddProfile(new ViewModelToEntityMapping());
             });
             _mapper = mappingConfig.CreateMapper();
 

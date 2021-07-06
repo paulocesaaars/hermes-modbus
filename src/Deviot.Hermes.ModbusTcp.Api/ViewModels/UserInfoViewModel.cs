@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Deviot.Hermes.ModbusTcp.Api.ViewModels.Bases;
 using System.ComponentModel.DataAnnotations;
 
 namespace Deviot.Hermes.ModbusTcp.Api.ViewModels
 {
-    public class UserInfoViewModel
+    public class UserInfoViewModel : EntityBaseModelView
     {
-        [Required]
-        public Guid Id { get; set; }
-
         [Required]
         [MinLength(5)]
         [MaxLength(150)]

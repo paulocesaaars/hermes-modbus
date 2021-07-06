@@ -24,7 +24,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Bases
 
         private const string CONTENT_TYPE = "application/json";
         private const string OK_MESSAGE = "A requisição foi executada com sucesso";
-        private const string INTERNAL_ERROR_MESSAGE = "A requisição não foi executada, houve um erro interno";
+        private const string INTERNAL_ERROR_MESSAGE = "A requisição não foi executada com sucesso, erro não identificado";
 
         protected CustomControllerBase(INotifier notifier, 
                                        IMapper mapper, 
@@ -55,7 +55,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Bases
 
         protected ActionResult CustomResponse(object value = null)
         {
-            var messages = new List<string>();
+            var messages = new List<string>(10);
             var httpStatusCode = HttpStatusCode.OK;
             
             if (_notifier.HasNotifications)
@@ -92,6 +92,16 @@ namespace Deviot.Hermes.ModbusTcp.Api.Bases
                 {
                     httpStatusCode = HttpStatusCode.Created;
                     messages.Add(notifies.First(x => x.Type == HttpStatusCode.Created).Message);
+                }
+                else if (notifies.Any(x => x.Type == HttpStatusCode.OK))
+                {
+                    httpStatusCode = HttpStatusCode.OK;
+                    messages.Add(notifies.First(x => x.Type == HttpStatusCode.OK).Message);
+                }
+                else
+                {
+                    httpStatusCode = HttpStatusCode.InternalServerError;
+                    messages.Add(INTERNAL_ERROR_MESSAGE);
                 }
 
                 return GenerateContentResult(httpStatusCode, messages, value);
