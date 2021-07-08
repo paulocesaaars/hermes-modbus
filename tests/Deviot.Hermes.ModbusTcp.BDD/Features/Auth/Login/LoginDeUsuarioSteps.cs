@@ -4,23 +4,20 @@ using Deviot.Hermes.ModbusTcp.Api;
 using Deviot.Hermes.ModbusTcp.Api.ViewModels;
 using Deviot.Hermes.ModbusTcp.BDD.Bases;
 using Deviot.Hermes.ModbusTcp.BDD.Fixtures;
-using Deviot.Hermes.ModbusTcp.Business.Entities;
 using FluentAssertions;
-using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
+namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth.Login
 {
     [Binding]
-    [ExcludeFromCodeCoverage]
     [Collection(nameof(IntegrationApiTestFixtureCollection))]
     public class LoginDeUsuarioSteps : IntegrationTestBase
     {
-        private Login _login;
+        private LoginViewModel _login;
         private HttpResponseMessage _httpResponseMessage;
 
         public LoginDeUsuarioSteps(IntegrationTestFixture<Startup> integrationTestFixtureIdentity, 
@@ -33,16 +30,16 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
         [Given(@"que tenho um username e senha válidos")]
         public void DadoQueTenhoUmUsernameESenhaValidos()
         {
-            _login = new Login("admin", "admin");
+            _login = GetAdminLogin();
         }
         
         [Given(@"que tenho um username ou senha invalido")]
         public void DadoQueTenhoUmUsernameOuSenhaInvalido()
         {
-            _login = new Login("admin", "123456");
+            _login = GetInvalidLogin();
         }
         
-        [When(@"executar a url de login via POST")]
+        [When(@"executar a url via POST")]
         public async Task QuandoExecutarAUrlDeLogin()
         {
             var content = Utils.CreateStringContent(Utils.Serializer(_login));
@@ -61,7 +58,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
             var json = await _httpResponseMessage.Content.ReadAsStringAsync();
             var result = Utils.Deserializer<GenericActionResult<TokenViewModel>>(json);
 
-            result.Data.Should().NotBeNull();
+            result.Data.AccessToken.Should().NotBeNull();
         }
         
         [Then(@"uma mensagem de erro: usuário ou senha inválidos")]

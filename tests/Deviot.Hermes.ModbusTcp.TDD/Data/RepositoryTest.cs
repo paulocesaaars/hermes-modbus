@@ -4,13 +4,11 @@ using Deviot.Hermes.ModbusTcp.TDD.Fakes;
 using Deviot.Hermes.ModbusTcp.TDD.Helpers;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Data
 {
-    [ExcludeFromCodeCoverage]
     public class RepositoryTest
     {
         private readonly IRepository _repository;

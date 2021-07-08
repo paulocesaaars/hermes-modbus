@@ -2,11 +2,9 @@
 using Deviot.Hermes.ModbusTcp.Data.Configuration;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Helpers
 {
-    [ExcludeFromCodeCoverage]
     public static class RepositoryHelper
     {
         private const string CONNECTION_STRING = "Data Source=:memory:";

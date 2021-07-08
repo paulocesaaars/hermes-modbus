@@ -2,17 +2,15 @@
 using Deviot.Hermes.ModbusTcp.BDD.Bases;
 using Deviot.Hermes.ModbusTcp.BDD.Fixtures;
 using FluentAssertions;
-using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Deviot.Hermes.ModbusTcp.BDD.Features.Health
+namespace Deviot.Hermes.ModbusTcp.BDD.Features.HeathCheck
 {
     [Binding]
-    [ExcludeFromCodeCoverage]
     [Collection(nameof(IntegrationApiTestFixtureCollection))]
     public class HealthCheckSteps : IntegrationTestBase
     {
@@ -25,7 +23,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Health
 
         }
 
-        [When(@"Executar a url de heathchek via GET")]
+        [When(@"Executar a url via GET")]
         public async Task QuandoExecutarAUrlDeHeathchekViaGETAsync()
         {
             _httpResponseMessage = await _integrationTestFixture.Client.GetAsync($"/api/v1/health-check");

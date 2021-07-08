@@ -3,11 +3,12 @@ using Deviot.Hermes.ModbusTcp.Api.ViewModels;
 using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Interfaces;
 using Deviot.Hermes.ModbusTcp.TDD.Bases;
-using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Controllers;
+using Deviot.Hermes.ModbusTcp.TDD.Fakes;
+using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Collections;
+using Deviot.Hermes.ModbusTcp.TDD.Helpers;
 using FluentAssertions;
 using Moq;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -15,27 +16,38 @@ using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
 {
-    [ExcludeFromCodeCoverage]
-    [Collection(nameof(AuthControllerCollection))]
     public class AuthControllerTest : ControllerTestBase
     {
         private readonly AuthController _authController;
         private readonly Mock<IAuthService> _authService;
-        private readonly AuthControllerFixture _authControllerFixture;
 
-        public AuthControllerTest(AuthControllerFixture authControllerFixture)
+        public AuthControllerTest()
         {
             _authController = _mocker.CreateInstance<AuthController>();
             _authService = _mocker.GetMock<IAuthService>();
-            _authControllerFixture = authControllerFixture;
+        }
+
+        public TokenViewModel GetTokenViewModel(Token token)
+        {
+            var userInfoViewModel = new UserInfoViewModel
+            {
+                Id = token.User.Id,
+                FullName = token.User.FullName,
+                UserName = token.User.UserName,
+                Administrator = token.User.Administrator,
+                Enabled = token.User.Enabled
+            };
+
+            return new TokenViewModel { AccessToken = token.AccessToken, User = userInfoViewModel };
         }
 
         [Fact]
         public async Task LoginAsync_Return200()
         {
-            var output = _authControllerFixture.GetTokenViewModel();
+            var token = TokenHelper.GetToken(UserFake.GetUserAdmin());
+            var output = GetTokenViewModel(token);
             _authService.Setup(x => x.LoginAsync(It.IsAny<Login>()))
-                        .ReturnsAsync(_authControllerFixture.GetToken());
+                        .ReturnsAsync(token);
 
             var response = await _authController.LoginAsync(new LoginViewModel());
             var result = GetGenericActionResult(response);

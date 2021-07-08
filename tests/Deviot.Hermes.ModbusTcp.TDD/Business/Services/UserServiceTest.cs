@@ -1,8 +1,9 @@
 ﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
+using Deviot.Hermes.ModbusTcp.TDD.Fakes;
+using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Collections;
 using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Services;
 using FluentAssertions;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -10,8 +11,7 @@ using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 {
-    [ExcludeFromCodeCoverage]
-    [Collection(nameof(UserServiceCollection))]
+    [Collection(nameof(ServicesCollection))]
     public class UserServiceTest
     {
         private readonly UserServiceFixture _userServiceFixture;
@@ -27,7 +27,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Retorna usuário por id - Sucesso")]
         public async Task GetUserForId_SuccessAsync()
         {
-            var user = _userServiceFixture.GetUserInfoAdmin();
+            var user = UserInfoFake.GetUserAdmin();
             var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
 
             var resultado = await userService.GetAsync(user.Id);
@@ -114,7 +114,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         public async Task InsertAdminUser_AuthorizationErrorAsync()
         {
             var newUser = new User(Guid.NewGuid(), "Usuario administrador", "usuario_admin", "123456", true, true);
-            var loggedUser = _userServiceFixture.GetUserInfoPaulo();
+            var loggedUser = UserInfoFake.GetUserPaulo();
             var userService = _userServiceFixture.GetService(loggedUser);
 
             await userService.InsertAsync(newUser);
@@ -146,9 +146,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Atualizar seu usuário - Sucesso")]
         public async Task UpdateUser_SuccessAsync()
         {
-            var user = _userServiceFixture.GetUserInfoPaulo();
-            var loggedUser = _userServiceFixture.GetUserInfoPaulo();
-            var userService = _userServiceFixture.GetService(loggedUser);
+            var user = UserInfoFake.GetUserPaulo();
+            var userService = _userServiceFixture.GetService(user);
 
             user.SetFullName("Paulo Souza");
 
@@ -165,9 +164,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Atualizar seu usuário - Erro de validação")]
         public async Task UpdateUser_ValidationErrorAsync()
         {
-            var user = _userServiceFixture.GetUserInfoPaulo();
-            var loggedUser = _userServiceFixture.GetUserInfoPaulo();
-            var userService = _userServiceFixture.GetService(loggedUser);
+            var user = UserInfoFake.GetUserPaulo();
+            var userService = _userServiceFixture.GetService(user);
 
             user.SetUserName("paulo cesar");
 
@@ -184,9 +182,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Atualizar seu usuário para administrador - Erro de autorização")]
         public async Task UpdateOtherUserForAdmin_AuthorizationError()
         {
-            var user = _userServiceFixture.GetUserInfoPaulo();
-            var loggedUser = _userServiceFixture.GetUserInfoPaulo();
-            var userService = _userServiceFixture.GetService(loggedUser);
+            var user = UserInfoFake.GetUserPaulo();
+            var userService = _userServiceFixture.GetService(user);
 
             user.SetAdministrator(true);
 
@@ -203,9 +200,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Atualizar seu usuário - Nome de usuário já existente")]
         public async Task UpdateUser_ExistingUsernameErrorAsync()
         {
-            var user = _userServiceFixture.GetUserInfoPaulo();
-            var loggedUser = _userServiceFixture.GetUserInfoPaulo();
-            var userService = _userServiceFixture.GetService(loggedUser);
+            var user = UserInfoFake.GetUserPaulo();
+            var userService = _userServiceFixture.GetService(user);
 
             user.SetUserName("bruna");
 
@@ -222,7 +218,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Atualizar outro usuário - Sucesso")]
         public async Task UpdateOtherUser_SuccessAsync()
         {
-            var user = _userServiceFixture.GetUserInfoPaulo();
+            var user = UserInfoFake.GetUserPaulo();
             var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
 
             user.SetFullName("Paulo César");
@@ -240,8 +236,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Atualizar outro usuário - Erro de autorização")]
         public async Task UpdateUserExistingUsername()
         {
-            var user = _userServiceFixture.GetUserBruna(true);
-            var loggedUser = _userServiceFixture.GetUserInfoPaulo();
+            var user = UserInfoFake.GetUserBruna();
+            var loggedUser = UserInfoFake.GetUserPaulo();
             var userService = _userServiceFixture.GetService(loggedUser);
 
             user.SetFullName("Bruna Stefano");
@@ -259,7 +255,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Deletar usuário - Sucesso")]
         public async Task DeleteUser_SuccessAsync()
         {
-            var user = _userServiceFixture.GetUserInfoPaula();
+            var user = UserInfoFake.GetUserPaula();
             var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
 
             await userService.DeleteAsync(user.Id);
@@ -271,8 +267,8 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Deletar usuário - Erro de autorização")]
         public async Task DeleteUser_AuthorizationErrorAsync()
         {
-            var user = _userServiceFixture.GetUserInfoPaula();
-            var loggedUser = _userServiceFixture.GetUserInfoPaulo();
+            var user = UserInfoFake.GetUserBruna();
+            var loggedUser = UserInfoFake.GetUserPaulo();
             var userService = _userServiceFixture.GetService(loggedUser);
 
             await userService.DeleteAsync(user.Id);
@@ -304,7 +300,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Deletar usuário - Não permite apagar todos administradores")]
         public async Task DeleteUser_AdministratorLimitsAsync()
         {
-            var user = _userServiceFixture.GetUserInfoAdmin();
+            var user = UserInfoFake.GetUserAdmin();
             var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
 
             await userService.DeleteAsync(user.Id);
@@ -320,7 +316,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Alterar senha - Sucesso")]
         public async Task UpdatePassword_SuccessAsync()
         {
-            var user = _userServiceFixture.GetUserAdmin();
+            var user = UserFake.GetUserBruna();
             var userPassword = new UserPassword(user.Id, user.Password, "hermes");
             var userService = _userServiceFixture.GetService(user);
 
@@ -332,7 +328,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Alterar senha - Erro de validação")]
         public async Task UpdatePassword_ValidationErrorAsync()
         {
-            var user = _userServiceFixture.GetUserPaulo();
+            var user = UserFake.GetUserPaula();
             var userPassword = new UserPassword(user.Id, user.Password, "123");
             var userService = _userServiceFixture.GetService(user);
 
@@ -347,7 +343,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Alterar senha - Não permite alterar senha de outro usuário")]
         public async Task UpdatePassword_AuthorizationErrorAsync()
         {
-            var user = _userServiceFixture.GetUserPaulo();
+            var user = UserFake.GetUserPaula();
             var userPassword = new UserPassword(user.Id, user.Password, "123456");
             var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
 
@@ -362,7 +358,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Alterar senha - Senha atual inválida")]
         public async Task UpdatePassword_InvalidPasswordAsync()
         {
-            var user = _userServiceFixture.GetUserAdmin();
+            var user = UserFake.GetUserPaula();
             var userPassword = new UserPassword(user.Id, "654321", "hermes");
             var userService = _userServiceFixture.GetService(user);
 
@@ -377,7 +373,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Checar nome de usuário - Existe")]
         public async Task CheckUserNameExist_ExistAsync()
         {
-            var user = _userServiceFixture.GetUserInfoPaulo();
+            var user = UserInfoFake.GetUserPaulo();
             var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
 
             var result = await userService.CheckUserNameExistAsync(user.UserName);

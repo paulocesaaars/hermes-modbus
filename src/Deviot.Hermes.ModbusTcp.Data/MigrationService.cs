@@ -3,9 +3,11 @@ using Deviot.Hermes.ModbusTcp.Data.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Deviot.Hermes.ModbusTcp.Data
 {
+    [ExcludeFromCodeCoverage]
     public class MigrationService : IMigrationService
     {
         private readonly ApplicationDbContext _applicationDbContext;

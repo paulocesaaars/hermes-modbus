@@ -1,14 +1,15 @@
-﻿using Deviot.Hermes.ModbusTcp.Business.Interfaces;
+﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
+using Deviot.Hermes.ModbusTcp.Business.Interfaces;
+using Deviot.Hermes.ModbusTcp.TDD.Fakes;
+using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Collections;
 using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Services;
 using FluentAssertions;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 {
-    [ExcludeFromCodeCoverage]
-    [Collection(nameof(AuthServiceCollection))]
+    [Collection(nameof(ServicesCollection))]
     public class AuthServiceTest
     {
         private readonly IAuthService _authService;
@@ -23,7 +24,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Login válido")]
         public async Task ValidLogin()
         {
-            var login = _authServiceFixture.GetLoginAdmin();
+            var login = LoginFake.GetLoginAdmin();
 
             var token = await _authService.LoginAsync(login);
 
@@ -35,7 +36,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Login inválido")]
         public async Task InvalidLogin()
         {
-            var login = _authServiceFixture.GetInvalidLogin();
+            var login = new Login("login invalido", "invalido");
             var token = await _authService.LoginAsync(login);
 
             token.Should().BeNull();
@@ -44,7 +45,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
         [Fact(DisplayName = "Parametrizando usuário logado")]
         public void GetSetLoggedUser()
         {
-            var user = _authServiceFixture.GetUserInfoAdmin();
+            var user = UserInfoFake.GetUserAdmin();
 
             _authService.SetLoggedUser(user);
             var result = _authService.GetLoggedUser();

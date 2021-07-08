@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Deviot.Hermes.ModbusTcp.BDD.Features.Health
+namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.BuscarUsuarios
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Health
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class HealthCheckFeature : object, Xunit.IClassFixture<HealthCheckFeature.FixtureData>, System.IDisposable
+    public partial class BuscarUsuariosFeature : object, Xunit.IClassFixture<BuscarUsuariosFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Health
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "HealthCheck.feature"
+#line 1 "BuscarUsuarios.feature"
 #line hidden
         
-        public HealthCheckFeature(HealthCheckFeature.FixtureData fixtureData, Deviot_Hermes_ModbusTcp_BDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public BuscarUsuariosFeature(BuscarUsuariosFeature.FixtureData fixtureData, Deviot_Hermes_ModbusTcp_BDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Health
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Features/Health", "HealthCheck", "\tComo consumidor de api quero checar a saúde da api", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Features/User/BuscarUsuarios", "Buscar usuários", "\tComo consumidor de api quero buscar todos usuários", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,14 +80,14 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Health
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Obter status ok")]
-        [Xunit.TraitAttribute("FeatureTitle", "HealthCheck")]
-        [Xunit.TraitAttribute("Description", "Obter status ok")]
-        public virtual void ObterStatusOk()
+        [Xunit.SkippableFactAttribute(DisplayName="Obter todos usuários")]
+        [Xunit.TraitAttribute("FeatureTitle", "Buscar usuários")]
+        [Xunit.TraitAttribute("Description", "Obter todos usuários")]
+        public virtual void ObterTodosUsuarios()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Obter status ok", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Obter todos usuários", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -109,10 +109,54 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 5
- testRunner.When("Executar a url de heathchek via GET", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.Given("que tenho um token de acesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 6
- testRunner.Then("a api retornará um status code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.When("executar url via GET", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 7
+testRunner.Then("a api retornará status code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+#line 8
+testRunner.And("todos usuários do sistema", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Erro de autenticação")]
+        [Xunit.TraitAttribute("FeatureTitle", "Buscar usuários")]
+        [Xunit.TraitAttribute("Description", "Erro de autenticação")]
+        public virtual void ErroDeAutenticacao()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autenticação", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 10
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 11
+testRunner.When("executar a url via GET", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 12
+testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -125,12 +169,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                HealthCheckFeature.FeatureSetup();
+                BuscarUsuariosFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                HealthCheckFeature.FeatureTearDown();
+                BuscarUsuariosFeature.FeatureTearDown();
             }
         }
     }

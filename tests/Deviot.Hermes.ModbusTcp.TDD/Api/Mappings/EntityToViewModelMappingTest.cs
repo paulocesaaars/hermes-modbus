@@ -1,27 +1,19 @@
 ﻿using Deviot.Hermes.ModbusTcp.Api.ViewModels;
 using Deviot.Hermes.ModbusTcp.TDD.Bases;
-using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Controllers;
+using Deviot.Hermes.ModbusTcp.TDD.Fakes;
+using Deviot.Hermes.ModbusTcp.TDD.Helpers;
 using FluentAssertions;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Api.Mappings
 {
-    [ExcludeFromCodeCoverage]
-    [Collection(nameof(EntityMappingCollection))]
     public class EntityToViewModelMappingTest : MappingBaseTest
     {
-        private readonly EntityMappingFixture _entityMappingFixture;
-
-        public EntityToViewModelMappingTest(EntityMappingFixture entityMappingFixture)
-        {
-            _entityMappingFixture = entityMappingFixture;
-        }
-
         [Fact]
         public void TokenForTokenViewModel()
         {
-            var entity = _entityMappingFixture.GetToken();
+            var user = UserInfoFake.GetUserAdmin();
+            var entity = TokenHelper.GetToken(user);
             var viewModel = _mapper.Map<TokenViewModel>(entity);
 
             viewModel.Should().NotBeNull();
@@ -36,7 +28,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Mappings
         [Fact]
         public void UserInfoForUserInfoViewModel()
         {
-            var entity = _entityMappingFixture.GetUserInfo();
+            var entity = UserInfoFake.GetUserAdmin();
             var viewModel = _mapper.Map<UserInfoViewModel>(entity);
 
             viewModel.Should().NotBeNull();

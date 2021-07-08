@@ -1,28 +1,17 @@
-﻿using Deviot.Hermes.ModbusTcp.Api.ViewModels;
-using Deviot.Hermes.ModbusTcp.Business.Entities;
+﻿using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.TDD.Bases;
-using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Controllers;
+using Deviot.Hermes.ModbusTcp.TDD.Fakes;
 using FluentAssertions;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Api.Mappings
 {
-    [ExcludeFromCodeCoverage]
-    [Collection(nameof(ViewModelMappingCollection))]
     public class ViewModelToEntityMappingTest : MappingBaseTest
     {
-        private readonly ViewModelMappingFixture _viewModelMappingFixture;
-
-        public ViewModelToEntityMappingTest(ViewModelMappingFixture viewModelMappingFixture)
-        {
-            _viewModelMappingFixture = viewModelMappingFixture;
-        }
-
         [Fact]
         public void LoginViewModelForLogin()
         {
-            var viewModel = _viewModelMappingFixture.GetLogin();
+            var viewModel = LoginFake.GetLoginAdmin();
             var entity = _mapper.Map<Login>(viewModel);
 
             entity.Should().NotBeNull();
@@ -34,7 +23,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Mappings
         [Fact]
         public void UserViewModelForUser()
         {
-            var viewModel = _viewModelMappingFixture.GetUser();
+            var viewModel = UserFake.GetUserAdmin();
             var entity = _mapper.Map<User>(viewModel);
 
             entity.Should().NotBeNull();
@@ -49,7 +38,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Mappings
         [Fact]
         public void UserInfoViewModelForUserInfo()
         {
-            var viewModel = _viewModelMappingFixture.GetUserInfo();
+            var viewModel = UserInfoFake.GetUserAdmin();
             var entity = _mapper.Map<UserInfo>(viewModel);
 
             entity.Should().NotBeNull();
@@ -63,7 +52,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Mappings
         [Fact]
         public void UserPasswordViewModelForUserPassword()
         {
-            var viewModel = _viewModelMappingFixture.GetUserPassword();
+            var viewModel = UserPasswordFake.GetPasswordAdminViewModel();
             var entity = _mapper.Map<UserPassword>(viewModel);
 
             entity.Should().NotBeNull();

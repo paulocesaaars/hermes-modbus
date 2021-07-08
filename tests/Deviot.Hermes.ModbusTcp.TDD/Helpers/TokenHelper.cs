@@ -2,11 +2,9 @@
 using Deviot.Hermes.ModbusTcp.Business.Services;
 using Deviot.Hermes.ModbusTcp.TDD.Fakes;
 using Microsoft.Extensions.Options;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Helpers
 {
-    [ExcludeFromCodeCoverage]
     public static class TokenHelper
     {
         public static Token GetToken(UserInfo user)

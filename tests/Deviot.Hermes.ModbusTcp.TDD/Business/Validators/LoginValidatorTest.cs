@@ -2,12 +2,10 @@
 using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Validators;
 using FluentValidation.TestHelper;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Business.Validators
 {
-    [ExcludeFromCodeCoverage]
     public class LoginValidatorTest
     {
         private readonly LoginValidator _loginValidator;

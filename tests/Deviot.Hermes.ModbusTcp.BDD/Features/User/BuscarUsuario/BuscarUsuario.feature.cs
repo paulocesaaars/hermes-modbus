@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
+namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.BuscarUsuario
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class LoginDeUsuarioFeature : object, Xunit.IClassFixture<LoginDeUsuarioFeature.FixtureData>, System.IDisposable
+    public partial class BuscarUsuarioFeature : object, Xunit.IClassFixture<BuscarUsuarioFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Login.feature"
+#line 1 "BuscarUsuario.feature"
 #line hidden
         
-        public LoginDeUsuarioFeature(LoginDeUsuarioFeature.FixtureData fixtureData, Deviot_Hermes_ModbusTcp_BDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public BuscarUsuarioFeature(BuscarUsuarioFeature.FixtureData fixtureData, Deviot_Hermes_ModbusTcp_BDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Features/Auth", "Login de usuário", "\tComo consumidor de api quero obter um token de acesso", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Features/User/BuscarUsuario", "Buscar usuário", "\tComo consumidor de api quero buscar um usuário específico", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,14 +80,14 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Obter token de acesso")]
-        [Xunit.TraitAttribute("FeatureTitle", "Login de usuário")]
-        [Xunit.TraitAttribute("Description", "Obter token de acesso")]
-        public virtual void ObterTokenDeAcesso()
+        [Xunit.SkippableFactAttribute(DisplayName="Obter usuário")]
+        [Xunit.TraitAttribute("FeatureTitle", "Buscar usuário")]
+        [Xunit.TraitAttribute("Description", "Obter usuário")]
+        public virtual void ObterUsuario()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Obter token de acesso", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Obter usuário", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -109,30 +109,33 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 5
-testRunner.Given("que tenho um username e senha válidos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+testRunner.Given("que tenho um token de acesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 6
-testRunner.When("executar a url de login via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.And("que tenho um id de usuário válido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 7
-testRunner.Then("A api retornará um stutus code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.When("executar a url via GET", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 8
-testRunner.And("um token de acesso valido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.Then("a api retornará status code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+#line 9
+testRunner.And("o usuário desejado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Negar token de acesso")]
-        [Xunit.TraitAttribute("FeatureTitle", "Login de usuário")]
-        [Xunit.TraitAttribute("Description", "Negar token de acesso")]
-        public virtual void NegarTokenDeAcesso()
+        [Xunit.SkippableFactAttribute(DisplayName="Usuário não encontrado")]
+        [Xunit.TraitAttribute("FeatureTitle", "Buscar usuário")]
+        [Xunit.TraitAttribute("Description", "Usuário não encontrado")]
+        public virtual void UsuarioNaoEncontrado()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negar token de acesso", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 10
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Usuário não encontrado", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -152,17 +155,61 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 11
-testRunner.Given("que tenho um username ou senha invalido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
-#line hidden
 #line 12
-testRunner.When("executar a url de login via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.Given("que tenho um token de acesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 13
-testRunner.Then("A api retornará um stutus code 404", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.And("que que tenho um id de usuário inválido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 14
-testRunner.And("uma mensagem de erro: \'Usuário ou senha inválidos.\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.When("executar a url via GET", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 15
+testRunner.Then("a api retornará status code 404", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+#line 16
+testRunner.And("a mensagem \'O usuário não foi encontrado\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Erro de autenticação")]
+        [Xunit.TraitAttribute("FeatureTitle", "Buscar usuário")]
+        [Xunit.TraitAttribute("Description", "Erro de autenticação")]
+        public virtual void ErroDeAutenticacao()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autenticação", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 18
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 19
+testRunner.Given("que tenho um id de usuário válido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line hidden
+#line 20
+testRunner.When("executar a url via GET", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 21
+testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -175,12 +222,12 @@ testRunner.And("uma mensagem de erro: \'Usuário ou senha inválidos.\'", ((stri
             
             public FixtureData()
             {
-                LoginDeUsuarioFeature.FeatureSetup();
+                BuscarUsuarioFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                LoginDeUsuarioFeature.FeatureTearDown();
+                BuscarUsuarioFeature.FeatureTearDown();
             }
         }
     }

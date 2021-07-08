@@ -4,12 +4,11 @@ using Deviot.Hermes.ModbusTcp.Api.ViewModels.Bases;
 using Deviot.Hermes.ModbusTcp.Business.Entities;
 using Deviot.Hermes.ModbusTcp.Business.Interfaces;
 using Deviot.Hermes.ModbusTcp.TDD.Bases;
-using Deviot.Hermes.ModbusTcp.TDD.Fixtures.Controllers;
+using Deviot.Hermes.ModbusTcp.TDD.Fakes;
 using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -17,27 +16,23 @@ using Xunit;
 
 namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
 {
-    [ExcludeFromCodeCoverage]
-    [Collection(nameof(UserControllerCollection))]
     public class UserControllerTest : ControllerTestBase
     {
         private readonly UserController _userController;
         private readonly Mock<IUserService> _userService;
-        private readonly UserControllerFixture _userControllerFixture;
 
-        public UserControllerTest(UserControllerFixture userControllerFixture)
+        public UserControllerTest()
         {
             _userController = _mocker.CreateInstance<UserController>();
             _userService = _mocker.GetMock<IUserService>();
-            _userControllerFixture = userControllerFixture;
         }
 
         [Fact]
         public async Task GetAsync_Return200()
         {
-            var output = _userControllerFixture.GetUserInfoAdminViewModel();
+            var output = UserInfoFake.GetUserAdminViewModel();
             _userService.Setup(x => x.GetAsync(It.IsAny<Guid>()))
-                        .ReturnsAsync(_userControllerFixture.GetUserAdmin());
+                        .ReturnsAsync(UserInfoFake.GetUserAdmin());
 
             var response = await _userController.GetAsync(Guid.NewGuid());
             var result = GetGenericActionResult(response);
@@ -95,9 +90,9 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         [Fact]
         public async Task GetAllAsync_Return200()
         {
-            var output = _userControllerFixture.GetUserInfoViewModels();
+            var output = UserInfoFake.GetUsersViewModel();
             _userService.Setup(x => x.GetAllAsync(It.IsAny<int>(), It.IsAny<int>()))
-                        .ReturnsAsync(_userControllerFixture.GetUsers());
+                        .ReturnsAsync(UserInfoFake.GetUsers());
 
             var response = await _userController.GetAllAsync();
             var result = GetGenericActionResult(response);
@@ -410,7 +405,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         public async Task CheckUserNameExistAsync_Return500()
         {
             _userService.Setup(x => x.CheckUserNameExistAsync(It.IsAny<string>()))
-                        .ReturnsAsync(null)
+                        .ReturnsAsync(false)
                         .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
 
             var response = await _userController.CheckUserNameExistAsync(string.Empty);
