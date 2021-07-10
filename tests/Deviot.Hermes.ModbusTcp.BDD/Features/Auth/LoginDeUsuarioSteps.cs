@@ -11,16 +11,18 @@ using TechTalk.SpecFlow;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth.Login
+namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
 {
     [Binding]
+    [Scope(Feature = "Login de usuário")]
     [Collection(nameof(IntegrationApiTestFixtureCollection))]
     public class LoginDeUsuarioSteps : IntegrationTestBase
     {
         private LoginViewModel _login;
+        private GenericActionResult<TokenViewModel> _result;
         private HttpResponseMessage _httpResponseMessage;
 
-        public LoginDeUsuarioSteps(IntegrationTestFixture<Startup> integrationTestFixtureIdentity, 
+        public LoginDeUsuarioSteps(IntegrationTestFixture<Startup> integrationTestFixtureIdentity,
                                    ITestOutputHelper testOutputHelper
                                   ) : base(integrationTestFixtureIdentity, testOutputHelper)
         {
@@ -40,46 +42,32 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth.Login
         }
         
         [When(@"executar a url via POST")]
-        public async Task QuandoExecutarAUrlDeLogin()
+        public async Task QuandoExecutarAUrlViaPOST()
         {
             var content = Utils.CreateStringContent(Utils.Serializer(_login));
             _httpResponseMessage = await _integrationTestFixture.Client.PostAsync($"/api/v1/auth/login", content);
+
+            var json = await _httpResponseMessage.Content.ReadAsStringAsync();
+            _result = Utils.Deserializer<GenericActionResult<TokenViewModel>>(json);
         }
         
-        [Then(@"A api retornará um stutus code (.*)")]
+        [Then(@"a api retornará um stutus code (.*)")]
         public void EntaoAApiRetornaraUmStutusCode(int p0)
         {
-            p0.Should().Equals(_httpResponseMessage.StatusCode);
+            p0.Should().Be((int)_httpResponseMessage.StatusCode);
         }
         
         [Then(@"um token de acesso valido")]
-        public async Task EntaoUmTokenDeAcessoValido()
+        public void EntaoUmTokenDeAcessoValido()
         {
-            var json = await _httpResponseMessage.Content.ReadAsStringAsync();
-            var result = Utils.Deserializer<GenericActionResult<TokenViewModel>>(json);
-
-            result.Data.AccessToken.Should().NotBeNull();
+            _result.Data.AccessToken.Should().NotBeNull();
         }
         
-        [Then(@"uma mensagem de erro: usuário ou senha inválidos")]
-        public async Task EntaoUmaMensagemDeErroUsuarioOuSenhaInvalidos()
-        {
-            var json = await _httpResponseMessage.Content.ReadAsStringAsync();
-            var result = Utils.Deserializer<GenericActionResult<TokenViewModel>>(json);
-
-            result.Data.Should().BeNull();
-            result.Messages.Should().Contain("Usuário ou senha inválidos.");
-        }
-
         [Then(@"uma mensagem de erro: '(.*)'")]
-        public async Task EntaoUmaMensagemDeErro(string p0)
+        public void EntaoUmaMensagemDeErro(string p0)
         {
-            var json = await _httpResponseMessage.Content.ReadAsStringAsync();
-            var result = Utils.Deserializer<GenericActionResult<TokenViewModel>>(json);
-
-            result.Data.Should().BeNull();
-            result.Messages.Should().Contain(p0);
+            _result.Data.Should().BeNull();
+            _result.Messages.Should().Contain(p0);
         }
-
     }
 }

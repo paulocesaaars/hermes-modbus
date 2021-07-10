@@ -6,6 +6,7 @@ using Deviot.Hermes.ModbusTcp.BDD.Fixtures;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using TechTalk.SpecFlow;
 using Xunit.Abstractions;
 
 namespace Deviot.Hermes.ModbusTcp.BDD.Bases

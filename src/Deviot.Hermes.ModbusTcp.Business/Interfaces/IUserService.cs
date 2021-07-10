@@ -9,7 +9,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Interfaces
     {
         Task<UserInfo> GetAsync(Guid id);
 
-        Task<IEnumerable<UserInfo>> GetAllAsync(int take = 1000, int skip = 0);
+        Task<IEnumerable<UserInfo>> GetAllAsync();
 
         Task InsertAsync(User user);
 

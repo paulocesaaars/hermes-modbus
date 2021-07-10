@@ -28,7 +28,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.ExcluirUsuario
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Excluir Usuario.feature"
+#line 1 "ExcluirUsuario.feature"
 #line hidden
         
         public ExcluirUsuarioFeature(ExcluirUsuarioFeature.FixtureData fixtureData, Deviot_Hermes_ModbusTcp_BDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)

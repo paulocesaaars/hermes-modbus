@@ -4,11 +4,11 @@
 Cenário: Obter token de acesso
 Dado que tenho um username e senha válidos
 Quando executar a url via POST
-Então A api retornará um stutus code 200
+Então a api retornará um stutus code 200
 E um token de acesso valido
 
 Cenário: Negar token de acesso
 Dado que tenho um username ou senha invalido
 Quando executar a url via POST
-Então A api retornará um stutus code 404
+Então a api retornará um stutus code 404
 E uma mensagem de erro: 'Usuário ou senha inválidos.'

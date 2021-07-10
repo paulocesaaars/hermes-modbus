@@ -11,6 +11,7 @@ namespace Deviot.Hermes.ModbusTcp.Data.Configuration
     {
         ApplicationDbContext IDesignTimeDbContextFactory<ApplicationDbContext>.CreateDbContext(string[] args)
         {
+            
             var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", true, true)

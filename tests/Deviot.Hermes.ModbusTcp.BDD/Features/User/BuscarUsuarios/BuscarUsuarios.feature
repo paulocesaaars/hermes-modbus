@@ -3,7 +3,7 @@
 
 Cenário: Obter todos usuários
 Dado que tenho um token de acesso
-Quando executar url via GET
+Quando executar a url via GET
 Então a api retornará status code 200
 E todos usuários do sistema
 

@@ -25,14 +25,6 @@ namespace Deviot.Hermes.ModbusTcp.Api.Configurations
 
         public static IServiceCollection AddDependencyInjectionConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            // Connection String
-            var sqliteConnection = configuration.GetConnectionString(CONNECTION_STRING);
-            if (string.IsNullOrEmpty(sqliteConnection)) 
-                throw new ArgumentNullException(CONNECTION_STRING_ERROR);
-
-            services.AddDbContext<ApplicationDbContext>(opt =>
-                opt.UseSqlite(sqliteConnection));
-
             // Commons
             services.AddScoped<INotifier, Notifier>();
 
@@ -50,6 +42,14 @@ namespace Deviot.Hermes.ModbusTcp.Api.Configurations
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenService, TokenService>();
+
+            // Connection String
+            var sqliteConnection = configuration.GetConnectionString(CONNECTION_STRING);
+            if (string.IsNullOrEmpty(sqliteConnection))
+                throw new ArgumentNullException(CONNECTION_STRING_ERROR);
+
+            services.AddDbContext<ApplicationDbContext>(opt =>
+                opt.UseSqlite(sqliteConnection));
 
             // Data
             services.AddScoped<ApplicationDbContext>();

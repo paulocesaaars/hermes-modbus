@@ -16,16 +16,17 @@ using Xunit.Abstractions;
 namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.BuscarUsuario
 {
     [Binding]
+    [Scope(Feature = "Buscar usuário")]
     [Collection(nameof(IntegrationApiTestFixtureCollection))]
     public class BuscarUsuarioSteps : IntegrationTestBase
     {
         private string _id;
-        private string _jsonResult;
+        private GenericActionResult<UserInfoViewModel> _result;
         private HttpResponseMessage _httpResponseMessage;
 
         public BuscarUsuarioSteps(IntegrationTestFixture<Startup> integrationTestFixtureIdentity,
-                                   ITestOutputHelper testOutputHelper
-                                  ) : base(integrationTestFixtureIdentity, testOutputHelper)
+                                  ITestOutputHelper testOutputHelper
+                                 ) : base(integrationTestFixtureIdentity, testOutputHelper)
         {
 
         }
@@ -53,32 +54,30 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.BuscarUsuario
         public async Task QuandoExecutarAUrlViaGET()
         {
             _httpResponseMessage = await _integrationTestFixture.Client.GetAsync($"/api/v1/user/{_id}");
-            _jsonResult = await _httpResponseMessage.Content.ReadAsStringAsync();
+            var json = await _httpResponseMessage.Content.ReadAsStringAsync();
+
+            if (!string.IsNullOrEmpty(json))
+                _result = Utils.Deserializer<GenericActionResult<UserInfoViewModel>>(json);
         }
         
         [Then(@"a api retornará status code (.*)")]
         public void EntaoAApiRetornaraStatusCode(int p0)
         {
-            p0.Should().Equals(_httpResponseMessage.StatusCode);
+            p0.Should().Be((int)_httpResponseMessage.StatusCode);
         }
         
         [Then(@"o usuário desejado")]
         public void EntaoOUsuarioDesejado()
         {
-            var result = Utils.Deserializer<GenericActionResult<UserInfoViewModel>>(_jsonResult);
-
             var user = UserInfoFake.GetUserAdmin();
 
-            result.Data.Should().BeEquivalentTo(user);
+            _result.Data.Should().BeEquivalentTo(user);
         }
         
         [Then(@"a mensagem '(.*)'")]
         public void EntaoAMensagem(string p0)
         {
-            var result = Utils.Deserializer<GenericActionResult<TokenViewModel>>(_jsonResult);
-
-            result.Data.Should().BeNull();
-            result.Messages.Should().Contain(p0);
+            _result.Messages.Should().Contain(p0);
         }
     }
 }

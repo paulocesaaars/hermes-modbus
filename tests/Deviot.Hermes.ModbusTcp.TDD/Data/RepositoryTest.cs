@@ -4,6 +4,7 @@ using Deviot.Hermes.ModbusTcp.TDD.Fakes;
 using Deviot.Hermes.ModbusTcp.TDD.Helpers;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -32,7 +33,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Data
         [Fact(DisplayName = "Adicionar")]
         public async Task Add_DeveRetornarUsuarioNovo()
         {
-            var newUser = UserFake.GetUserPaulo();
+            var newUser = new User(Guid.NewGuid(), "Novo usuario", "novo", "123456");
 
             await _repository.AddAsync<User>(newUser);
 

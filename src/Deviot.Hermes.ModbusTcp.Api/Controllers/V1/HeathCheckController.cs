@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
 {
-    [Route("api/v{version:apiVersion}/heath-check")]
+    [Route("api/v{version:apiVersion}/health-check")]
     public class HeathCheckController : CustomControllerBase
     {
 

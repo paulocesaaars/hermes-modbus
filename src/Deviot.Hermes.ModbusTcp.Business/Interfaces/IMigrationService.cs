@@ -2,8 +2,10 @@
 {
     public interface IMigrationService
     {
-        public void DeleteDatabase();
-
         public void Execute();
+
+        public void Deleted();
+
+        public void Populate();
     }
 }

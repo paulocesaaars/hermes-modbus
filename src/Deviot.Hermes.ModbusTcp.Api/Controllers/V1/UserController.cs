@@ -56,11 +56,11 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserInfoViewModel>>> GetAllAsync(int take = 1000, int skip = 0)
+        public async Task<ActionResult<IEnumerable<UserInfoViewModel>>> GetAllAsync()
         {
             try
             {
-                var users = await _userService.GetAllAsync(take, skip);
+                var users = await _userService.GetAllAsync();
 
                 if (_notifier.HasNotifications)
                     return CustomResponse();

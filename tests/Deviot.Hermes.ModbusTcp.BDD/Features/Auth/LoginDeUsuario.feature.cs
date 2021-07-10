@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth.Login
+namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth
 {
     using TechTalk.SpecFlow;
     using System;
@@ -28,7 +28,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth.Login
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Login.feature"
+#line 1 "LoginDeUsuario.feature"
 #line hidden
         
         public LoginDeUsuarioFeature(LoginDeUsuarioFeature.FixtureData fixtureData, Deviot_Hermes_ModbusTcp_BDD_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
@@ -40,7 +40,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.Auth.Login
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Features/Auth/Login", "Login de usuário", "\tComo consumidor de api quero obter um token de acesso", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-BR"), "Features/Auth", "Login de usuário", "\tComo consumidor de api quero obter um token de acesso", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -115,7 +115,7 @@ testRunner.Given("que tenho um username e senha válidos", ((string)(null)), ((T
 testRunner.When("executar a url via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 7
-testRunner.Then("A api retornará um stutus code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará um stutus code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 8
 testRunner.And("um token de acesso valido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
@@ -159,7 +159,7 @@ testRunner.Given("que tenho um username ou senha invalido", ((string)(null)), ((
 testRunner.When("executar a url via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 13
-testRunner.Then("A api retornará um stutus code 404", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará um stutus code 404", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 14
 testRunner.And("uma mensagem de erro: \'Usuário ou senha inválidos.\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");

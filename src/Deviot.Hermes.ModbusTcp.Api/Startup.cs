@@ -40,16 +40,19 @@ namespace Deviot.Hermes.ModbusTcp.Api
             services.AddSwaggerConfiguration();
         }
 
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationService databaseService)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment environment, IMigrationService migrationService)
         {
             app.UseSwaggerConfiguration();
 
-            app.UseApiConfiguration(env);
+            app.UseApiConfiguration(environment);
 
-            if (env.IsDevelopment())
-                databaseService.DeleteDatabase();
+            if (environment.EnvironmentName == "Development")
+                migrationService.Deleted();
 
-            databaseService.Execute();
+            migrationService.Execute();
+
+            if (environment.EnvironmentName == "Testing")
+                migrationService.Populate();
         }
     }
 }

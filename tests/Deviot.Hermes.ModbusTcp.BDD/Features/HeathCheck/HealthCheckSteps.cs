@@ -11,6 +11,7 @@ using Xunit.Abstractions;
 namespace Deviot.Hermes.ModbusTcp.BDD.Features.HeathCheck
 {
     [Binding]
+    [Scope(Feature = "HealthCheck")]
     [Collection(nameof(IntegrationApiTestFixtureCollection))]
     public class HealthCheckSteps : IntegrationTestBase
     {
@@ -32,7 +33,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.HeathCheck
         [Then(@"a api retornará um status code (.*)")]
         public void EntaoAApiRetornaraUmStatusCode(int p0)
         {
-            p0.Should().Equals(_httpResponseMessage.StatusCode);
+            p0.Should().Be((int)_httpResponseMessage.StatusCode);
         }
     }
 }

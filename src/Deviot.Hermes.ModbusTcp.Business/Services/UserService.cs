@@ -123,13 +123,11 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             }
         }
 
-        public async Task<IEnumerable<UserInfo>> GetAllAsync(int take = 1000, int skip = 0)
+        public async Task<IEnumerable<UserInfo>> GetAllAsync()
         {
             try
             {
                 var users = await _repository.Get<User>()
-                                             .Take(take)
-                                             .Skip(skip)
                                              .ToListAsync();
 
                 return users;

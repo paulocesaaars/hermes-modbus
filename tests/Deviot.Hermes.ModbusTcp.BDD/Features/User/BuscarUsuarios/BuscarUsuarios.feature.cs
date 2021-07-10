@@ -112,7 +112,7 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("que tenho um token de acesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 6
-testRunner.When("executar url via GET", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.When("executar a url via GET", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 7
 testRunner.Then("a api retornará status code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
