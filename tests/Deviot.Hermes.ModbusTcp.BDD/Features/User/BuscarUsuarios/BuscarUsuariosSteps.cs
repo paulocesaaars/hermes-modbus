@@ -7,6 +7,7 @@ using Deviot.Hermes.ModbusTcp.BDD.Fakes;
 using Deviot.Hermes.ModbusTcp.BDD.Fixtures;
 using FluentAssertions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
@@ -54,8 +55,8 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.BuscarUsuarios
         [Then(@"todos usuários do sistema")]
         public void EntaoTodosUsuariosDoSistema()
         {
-            var users = UserInfoFake.GetUsers();
-            _result.Data.Should().BeEquivalentTo(users);
+            _result.Data.Count().Should().BeGreaterOrEqualTo(3);
+            _result.Data.Should().ContainEquivalentOf(UserInfoFake.GetUserAdmin());
         }
     }
 }

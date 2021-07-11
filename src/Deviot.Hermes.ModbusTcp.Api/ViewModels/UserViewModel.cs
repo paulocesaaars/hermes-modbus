@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Deviot.Hermes.ModbusTcp.Api.ViewModels.Bases;
+using System.ComponentModel.DataAnnotations;
 
 namespace Deviot.Hermes.ModbusTcp.Api.ViewModels
 {
-    public class UserViewModel
+    public class UserViewModel : EntityBaseModelView
     {
         [Required]
         [MinLength(5)]

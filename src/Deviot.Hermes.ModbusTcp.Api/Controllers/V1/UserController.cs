@@ -78,7 +78,6 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<ActionResult> PostAsync([FromBody] UserViewModel userModelView)
         {
@@ -120,13 +119,12 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Roles = "Administrator")]
-        [HttpDelete]
-        public async Task<ActionResult> DeleteAsync([FromBody] EntityBaseModelView entityBaseModelView)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(Guid id)
         {
             try
             {
-                await _userService.DeleteAsync(entityBaseModelView.Id);
+                await _userService.DeleteAsync(id);
 
                 return CustomResponse();
             }

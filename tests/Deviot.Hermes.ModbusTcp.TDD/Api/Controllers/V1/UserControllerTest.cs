@@ -91,7 +91,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         public async Task GetAllAsync_Return200()
         {
             var output = UserInfoFake.GetUsersViewModel();
-            _userService.Setup(x => x.GetAllAsync(It.IsAny<int>(), It.IsAny<int>()))
+            _userService.Setup(x => x.GetAllAsync())
                         .ReturnsAsync(UserInfoFake.GetUsers());
 
             var response = await _userController.GetAllAsync();
@@ -105,7 +105,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         [Fact]
         public async Task GetAllAsync_Return500()
         {
-            _userService.Setup(x => x.GetAllAsync(It.IsAny<int>(), It.IsAny<int>()))
+            _userService.Setup(x => x.GetAllAsync())
                         .ReturnsAsync(null as IEnumerable<User>)
                         .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
 
@@ -120,7 +120,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         [Fact]
         public async Task GetAllAsync_ReturnGenericError()
         {
-            _userService.Setup(x => x.GetAllAsync(It.IsAny<int>(), It.IsAny<int>()))
+            _userService.Setup(x => x.GetAllAsync())
                          .Throws(new Exception());
 
             var response = await _userController.GetAllAsync();
@@ -274,7 +274,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
                         .Returns(Task.CompletedTask)
                         .Callback(() => _notifier.Notify(HttpStatusCode.OK, "Usuário deletado com sucesso."));
 
-            var response = await _userController.DeleteAsync(new EntityBaseModelView());
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 
@@ -289,7 +289,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
                         .Returns(Task.CompletedTask)
                         .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Usuário não encontrado."));
 
-            var response = await _userController.DeleteAsync(new EntityBaseModelView());
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 
@@ -304,7 +304,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
                         .Returns(Task.CompletedTask)
                         .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
 
-            var response = await _userController.DeleteAsync(new EntityBaseModelView());
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 
@@ -318,7 +318,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
             _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
                         .Throws(new Exception());
 
-            var response = await _userController.DeleteAsync(new EntityBaseModelView());
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 

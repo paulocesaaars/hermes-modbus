@@ -16,13 +16,20 @@ Então a api retornará status code 404
 E a mensagem 'O usuário não foi encontrado'
 
 Cenário: Erro de autenticação
-Dado que tenho um usuário válido
+Dado que tenho um id de usuário válido
 Quando executar a url via DELETE
 Então a api retornará status code 401
 
 Cenário: Erro de autorização ao deletar um usuário
 Dado que tenho um token de acesso normal
-E que tenho um usuário válido
-Quando executar a url via PUT
+E que tenho um id de usuário válido
+Quando executar a url via DELETE
 Então a api retornará status code 401
 E a mensagem 'Somente um administrador pode criar ou deletar um usuário'
+
+Cenário: Erro de autorização ao deletar todos os usuários administradores
+Dado que tenho um token de acesso admin
+E que tenho um id de administrador válido
+Quando executar a url via DELETE
+Então a api retornará status code 401
+E a mensagem 'Não é possivel deletar todos os usuários administradores'

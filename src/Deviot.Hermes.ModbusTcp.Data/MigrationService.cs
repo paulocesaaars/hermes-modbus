@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Deviot.Hermes.ModbusTcp.Data
@@ -32,10 +33,34 @@ namespace Deviot.Hermes.ModbusTcp.Data
 
         private async Task PopulateUsersAsync()
         {
-            var users = UserData.GetUsers();
+            var users = await _repository.Get<User>().ToListAsync();
+            var userDataList = UserData.GetUsers();
+
+            // Expurge
             foreach (var user in users)
-                if(!await _repository.Get<User>().AnyAsync(x => x.Id == user.Id))
-                    await _repository.AddAsync<User>(user);
+            {
+                if (!userDataList.Any(x => x.Id == user.Id))
+                    await _repository.DeleteAsync<User>(user);
+            }
+
+            foreach (var userData in userDataList)
+            {
+                if (users.Any(x => x.Id == userData.Id))
+                {
+                    var user = users.First(x => x.Id == userData.Id);
+                    user.SetFullName(userData.FullName);
+                    user.SetUserName(userData.UserName);
+                    user.SetPassword(userData.Password);
+                    user.SetEnabled(userData.Enabled);
+                    user.SetAdministrator(userData.Administrator);
+
+                    await _repository.EditAsync<User>(user);
+                }
+                else
+                {
+                    await _repository.AddAsync<User>(userData);
+                }
+            }
         }
 
         public void Execute()

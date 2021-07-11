@@ -257,7 +257,7 @@ testRunner.Given("que tenho um token de acesso admin", ((string)(null)), ((TechT
 testRunner.And("que tenho um usuário com nome já existente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 28
-testRunner.When("executar a url POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.When("executar a url via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 29
 testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");

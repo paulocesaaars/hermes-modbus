@@ -30,7 +30,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Bases
             return new LoginViewModel { UserName = "admin", Password = "admin" };
         }
 
-        protected LoginViewModel GetNormalLogin()
+        protected LoginViewModel GetPauloLogin()
         {
             return new LoginViewModel { UserName = "paulo", Password = "123456" };
         }

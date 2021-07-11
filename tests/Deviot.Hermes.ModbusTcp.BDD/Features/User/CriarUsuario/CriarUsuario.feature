@@ -25,7 +25,7 @@ E a mensagem 'A senha precisar ter somente valores alfanuméricos'
 Cenário: Nome de usuário já existente
 Dado que tenho um token de acesso admin
 E que tenho um usuário com nome já existente
-Quando executar a url POST
+Quando executar a url via POST
 Então a api retornará status code 403
 E a mensagem 'O nome de usuário informado já existe'
 

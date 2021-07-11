@@ -203,7 +203,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 19
-testRunner.Given("que tenho um usuário válido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+testRunner.Given("que tenho um id de usuário válido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 20
 testRunner.When("executar a url via DELETE", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
@@ -247,16 +247,63 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("que tenho um token de acesso normal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 25
-testRunner.And("que tenho um usuário válido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que tenho um id de usuário válido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 26
-testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.When("executar a url via DELETE", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 27
 testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 28
 testRunner.And("a mensagem \'Somente um administrador pode criar ou deletar um usuário\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Erro de autorização ao deletar todos os usuários administradores")]
+        [Xunit.TraitAttribute("FeatureTitle", "Excluir usuário")]
+        [Xunit.TraitAttribute("Description", "Erro de autorização ao deletar todos os usuários administradores")]
+        public virtual void ErroDeAutorizacaoAoDeletarTodosOsUsuariosAdministradores()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autorização ao deletar todos os usuários administradores", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 30
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 31
+testRunner.Given("que tenho um token de acesso admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line hidden
+#line 32
+testRunner.And("que tenho um id de administrador válido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 33
+testRunner.When("executar a url via DELETE", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 34
+testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+#line 35
+testRunner.And("a mensagem \'Não é possivel deletar todos os usuários administradores\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();

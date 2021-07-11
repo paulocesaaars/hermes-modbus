@@ -20,7 +20,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.CriarUsuario
     [Collection(nameof(IntegrationApiTestFixtureCollection))]
     public class CriarUsuarioSteps : IntegrationTestBase
     {
-        private UserInfoViewModel _user;
+        private UserViewModel _user;
         private GenericActionResult<UserInfoViewModel> _result;
         private HttpResponseMessage _httpResponseMessage;
 
@@ -30,6 +30,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.CriarUsuario
         {
 
         }
+
         [Given(@"que tenho um token de acesso admin")]
         public async Task DadoQueTenhoUmTokenDeAcessoAdmin()
         {
@@ -40,55 +41,83 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.CriarUsuario
         [Given(@"que tenho um usuário válido")]
         public void DadoQueTenhoUmUsuarioValido()
         {
-            ScenarioContext.Current.Pending();
+            _user = new UserViewModel
+            {
+                FullName = "Novo usuário",
+                UserName = "novo_usuario",
+                Password = "123456",
+                Administrator = false,
+                Enabled = true
+            };
         }
         
         [Given(@"que tenho um usuário com nome inválido")]
         public void DadoQueTenhoUmUsuarioComNomeInvalido()
         {
-            ScenarioContext.Current.Pending();
+            _user = new UserViewModel
+            {
+                FullName = "Novo usuário",
+                UserName = "novo usuario",
+                Password = "123456",
+                Administrator = false,
+                Enabled = true
+            };
         }
         
         [Given(@"que tenho um usuário com senha inválida")]
         public void DadoQueTenhoUmUsuarioComSenhaInvalida()
         {
-            ScenarioContext.Current.Pending();
+            _user = new UserViewModel
+            {
+                FullName = "Novo usuário",
+                UserName = "novo_usuario",
+                Password = "123@456",
+                Administrator = false,
+                Enabled = true
+            };
         }
         
         [Given(@"que tenho um usuário com nome já existente")]
         public void DadoQueTenhoUmUsuarioComNomeJaExistente()
         {
-            ScenarioContext.Current.Pending();
+            _user = new UserViewModel
+            {
+                FullName = "Novo usuário",
+                UserName = "paulo",
+                Password = "123456",
+                Administrator = false,
+                Enabled = true
+            };
         }
         
         [Given(@"que tenho um token de acesso normal")]
-        public void DadoQueTenhoUmTokenDeAcessoNormal()
+        public async Task DadoQueTenhoUmTokenDeAcessoNormal()
         {
-            ScenarioContext.Current.Pending();
+            var token = await GetTokenAsync(GetPauloLogin());
+            _integrationTestFixture.AddToken(token);
         }
         
         [When(@"executar a url via POST")]
-        public void QuandoExecutarAUrlViaPOST()
+        public async Task QuandoExecutarAUrlViaPOST()
         {
-            ScenarioContext.Current.Pending();
-        }
-        
-        [When(@"executar a url POST")]
-        public void QuandoExecutarAUrlPOST()
-        {
-            ScenarioContext.Current.Pending();
+            var content = Utils.CreateStringContent(Utils.Serializer(_user));
+            _httpResponseMessage = await _integrationTestFixture.Client.PostAsync($"/api/v1/user", content);
+            var json = await _httpResponseMessage.Content.ReadAsStringAsync();
+
+            if (!string.IsNullOrEmpty(json))
+                _result = Utils.Deserializer<GenericActionResult<UserInfoViewModel>>(json);
         }
         
         [Then(@"a api retornará status code (.*)")]
         public void EntaoAApiRetornaraStatusCode(int p0)
         {
-            ScenarioContext.Current.Pending();
+            p0.Should().Be((int)_httpResponseMessage.StatusCode);
         }
         
         [Then(@"a mensagem '(.*)'")]
         public void EntaoAMensagem(string p0)
         {
-            ScenarioContext.Current.Pending();
+            _result.Messages.Should().Contain(p0);
         }
     }
 }

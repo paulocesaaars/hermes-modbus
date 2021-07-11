@@ -127,14 +127,14 @@ testRunner.And("a mensagem \'O usuário foi atualizado com sucesso\'", ((string)
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Editar meu usuário com sucesso")]
+        [Xunit.SkippableFactAttribute(DisplayName="Erro de autorização ao alterar um usuário diferente do meu")]
         [Xunit.TraitAttribute("FeatureTitle", "Editar usuário")]
-        [Xunit.TraitAttribute("Description", "Editar meu usuário com sucesso")]
-        public virtual void EditarMeuUsuarioComSucesso()
+        [Xunit.TraitAttribute("Description", "Erro de autorização ao alterar um usuário diferente do meu")]
+        public virtual void ErroDeAutorizacaoAoAlterarUmUsuarioDiferenteDoMeu()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Editar meu usuário com sucesso", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autorização ao alterar um usuário diferente do meu", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -159,29 +159,29 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("que tenho um token de acesso normal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 13
-testRunner.And("que tenho meu usuário atualizado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que tenho um usuário atualizado diferente do meu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 14
 testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 15
-testRunner.Then("a api retornará status code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 16
-testRunner.And("a mensagem \'O usuário foi atualizado com sucesso\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("a mensagem \'Não é permitido alterar dados de outro usuário\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Usuário não encontrado")]
+        [Xunit.SkippableFactAttribute(DisplayName="Editar meu usuário com sucesso")]
         [Xunit.TraitAttribute("FeatureTitle", "Editar usuário")]
-        [Xunit.TraitAttribute("Description", "Usuário não encontrado")]
-        public virtual void UsuarioNaoEncontrado()
+        [Xunit.TraitAttribute("Description", "Editar meu usuário com sucesso")]
+        public virtual void EditarMeuUsuarioComSucesso()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Usuário não encontrado", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Editar meu usuário com sucesso", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -203,32 +203,32 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 19
-testRunner.Given("que tenho um token de acesso admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+testRunner.Given("que tenho um token de acesso normal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 20
-testRunner.And("que que tenho um usuário com id inválido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que tenho meu usuário atualizado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 21
 testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 22
-testRunner.Then("a api retornará status code 404", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 23
-testRunner.And("a mensagem \'O usuário não foi encontrado\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("a mensagem \'O usuário foi atualizado com sucesso\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Nome de usuário inválido")]
+        [Xunit.SkippableFactAttribute(DisplayName="Erro de autorização ao alterar meu usuário para administrador")]
         [Xunit.TraitAttribute("FeatureTitle", "Editar usuário")]
-        [Xunit.TraitAttribute("Description", "Nome de usuário inválido")]
-        public virtual void NomeDeUsuarioInvalido()
+        [Xunit.TraitAttribute("Description", "Erro de autorização ao alterar meu usuário para administrador")]
+        public virtual void ErroDeAutorizacaoAoAlterarMeuUsuarioParaAdministrador()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nome de usuário inválido", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autorização ao alterar meu usuário para administrador", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -250,33 +250,33 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 26
-testRunner.Given("que tenho um token de acesso admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+testRunner.Given("que tenho um token de acesso normal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 27
-testRunner.And("que tenho um usuário com nome inválido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que tenho meu usuário atualizado para administrador", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 28
 testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 29
-testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 30
-testRunner.And("a mensagem \'O nome de usuário precisar ter somente valores alfanuméricos ou under" +
-                        "line\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("a mensagem \'Somente um administrador pode criar ou alterar um usuário administrad" +
+                        "or\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Senha de usuário inválida")]
+        [Xunit.SkippableFactAttribute(DisplayName="Editar outro usuário para administrador com sucesso")]
         [Xunit.TraitAttribute("FeatureTitle", "Editar usuário")]
-        [Xunit.TraitAttribute("Description", "Senha de usuário inválida")]
-        public virtual void SenhaDeUsuarioInvalida()
+        [Xunit.TraitAttribute("Description", "Editar outro usuário para administrador com sucesso")]
+        public virtual void EditarOutroUsuarioParaAdministradorComSucesso()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Senha de usuário inválida", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Editar outro usuário para administrador com sucesso", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 32
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -301,29 +301,29 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("que tenho um token de acesso admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 34
-testRunner.And("que tenho um usuário com senha inválida", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que tenho um usuário atualizado como Administrador diferente do meu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 35
 testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 36
-testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 37
-testRunner.And("a mensagem \'A senha precisar ter somente valores alfanuméricos\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("a mensagem \'O usuário foi atualizado com sucesso\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Nome de usuário já existente")]
+        [Xunit.SkippableFactAttribute(DisplayName="Usuário não encontrado")]
         [Xunit.TraitAttribute("FeatureTitle", "Editar usuário")]
-        [Xunit.TraitAttribute("Description", "Nome de usuário já existente")]
-        public virtual void NomeDeUsuarioJaExistente()
+        [Xunit.TraitAttribute("Description", "Usuário não encontrado")]
+        public virtual void UsuarioNaoEncontrado()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nome de usuário já existente", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Usuário não encontrado", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 39
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -348,29 +348,29 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("que tenho um token de acesso admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 41
-testRunner.And("que tenho um usuário com nome já existente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("que que tenho um usuário com id inválido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 42
-testRunner.When("executar a url PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 43
-testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 404", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 44
-testRunner.And("a mensagem \'O nome de usuário informado já existe\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("a mensagem \'O usuário não foi encontrado\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Erro de autenticação")]
+        [Xunit.SkippableFactAttribute(DisplayName="Nome de usuário inválido")]
         [Xunit.TraitAttribute("FeatureTitle", "Editar usuário")]
-        [Xunit.TraitAttribute("Description", "Erro de autenticação")]
-        public virtual void ErroDeAutenticacao()
+        [Xunit.TraitAttribute("Description", "Nome de usuário inválido")]
+        public virtual void NomeDeUsuarioInvalido()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autenticação", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nome de usuário inválido", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 46
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -392,27 +392,34 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 47
-testRunner.Given("que tenho um usuário válido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+testRunner.Given("que tenho um token de acesso admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 48
-testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.And("que tenho um usuário com nome inválido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 49
-testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 50
+testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+#line 51
+testRunner.And("a mensagem \'O nome de usuário precisar ter somente valores alfanuméricos ou under" +
+                        "line\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Erro de autorização ao alterar um usuário diferente do meu")]
+        [Xunit.SkippableFactAttribute(DisplayName="Nome de usuário já existente")]
         [Xunit.TraitAttribute("FeatureTitle", "Editar usuário")]
-        [Xunit.TraitAttribute("Description", "Erro de autorização ao alterar um usuário diferente do meu")]
-        public virtual void ErroDeAutorizacaoAoAlterarUmUsuarioDiferenteDoMeu()
+        [Xunit.TraitAttribute("Description", "Nome de usuário já existente")]
+        public virtual void NomeDeUsuarioJaExistente()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autorização ao alterar um usuário diferente do meu", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 51
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nome de usuário já existente", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 53
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -432,34 +439,34 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 52
-testRunner.Given("que tenho um token de acesso normal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
-#line hidden
-#line 53
-testRunner.And("que tenho um usuário atualizado diferente do meu", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
 #line 54
-testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.Given("que tenho um token de acesso admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 55
-testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.And("que tenho um usuário com nome já existente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 56
-testRunner.And("a mensagem \'Não é permitido alterar dados de outro usuário\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line hidden
+#line 57
+testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+#line 58
+testRunner.And("a mensagem \'O nome de usuário informado já existe\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Erro de autorização ao alterar meu usuário para administrador")]
+        [Xunit.SkippableFactAttribute(DisplayName="Erro de autenticação")]
         [Xunit.TraitAttribute("FeatureTitle", "Editar usuário")]
-        [Xunit.TraitAttribute("Description", "Erro de autorização ao alterar meu usuário para administrador")]
-        public virtual void ErroDeAutorizacaoAoAlterarMeuUsuarioParaAdministrador()
+        [Xunit.TraitAttribute("Description", "Erro de autenticação")]
+        public virtual void ErroDeAutenticacao()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autorização ao alterar meu usuário para administrador", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 58
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Erro de autenticação", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 60
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -479,21 +486,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 59
-testRunner.Given("que tenho um token de acesso normal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
-#line hidden
-#line 60
-testRunner.And("que tenho meu usuário atualizado para administrador", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
 #line 61
-testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+testRunner.Given("que tenho meu usuário atualizado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 62
-testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 63
-testRunner.And("a mensagem \'Somente um administrador pode criar ou alterar um usuário administrad" +
-                        "or\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
