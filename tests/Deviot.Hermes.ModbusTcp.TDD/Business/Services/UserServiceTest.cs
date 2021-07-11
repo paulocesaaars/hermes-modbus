@@ -322,7 +322,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             await userService.ChangePasswordAsync(userPassword);
 
-            _userServiceFixture.HasNotifications.Should().BeFalse();
+            _userServiceFixture.HasNotifications.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Alterar senha - Erro de validação")]
