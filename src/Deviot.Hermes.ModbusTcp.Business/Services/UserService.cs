@@ -255,6 +255,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                         {
                             user.SetPassword(Utils.Encript(userPassword.NewPassword));
                             await _repository.EditAsync<User>(user);
+                            NotifyOk(USER_UPDATED);
                         }
                         else
                         {
