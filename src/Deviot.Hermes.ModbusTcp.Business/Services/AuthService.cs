@@ -19,7 +19,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
 
         private UserInfo _userLogged;
 
-        private const string NOTFOUND_USER_ERROR = "Usuário ou senha inválidos.";
+        private const string NOTFOUND_USER_ERROR = "Usuário ou senha inválidos";
 
         public bool IsAuthenticated { get; private set; }
 

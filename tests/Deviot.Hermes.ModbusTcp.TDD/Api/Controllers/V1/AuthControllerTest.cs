@@ -62,7 +62,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         {
             _authService.Setup(x => x.LoginAsync(It.IsAny<Login>()))
                         .ReturnsAsync(null as Token)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Senha inválida."));
+                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Senha inválida"));
 
             var response = await _authController.LoginAsync(new LoginViewModel());
             var result = GetGenericActionResult(response);
@@ -77,7 +77,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         {
             _authService.Setup(x => x.LoginAsync(It.IsAny<Login>()))
                         .ReturnsAsync(null as Token)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Token não encontrado."));
+                        .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Token não encontrado"));
 
             var response = await _authController.LoginAsync(new LoginViewModel());
             var result = GetGenericActionResult(response);
@@ -92,7 +92,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         {
             _authService.Setup(x => x.LoginAsync(It.IsAny<Login>()))
                         .ReturnsAsync(null as Token)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
 
             var response = await _authController.LoginAsync(new LoginViewModel());
             var result = GetGenericActionResult(response);

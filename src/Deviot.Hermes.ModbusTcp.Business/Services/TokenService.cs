@@ -16,7 +16,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
         private readonly JwtSettings _jwtSettings;
 
         private const string CONFIG_ERROR = "As configurações do token não foram informadas";
-        private const string TOKEN_ERROR = "Erro ao gerar o token.";
+        private const string TOKEN_ERROR = "Erro ao gerar o token";
 
         public TokenService(IOptions<JwtSettings> jwtSettings)
         {
@@ -40,9 +40,6 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             identityClaims.AddClaim(new Claim("user-fullname", user.FullName.ToString()));
             identityClaims.AddClaim(new Claim("user-username", user.UserName.ToString()));
             identityClaims.AddClaim(new Claim("user-administrator", user.Administrator.ToString()));
-
-            if (user.Administrator)
-                identityClaims.AddClaim(new Claim("role", "admin"));
 
             return identityClaims;
         }

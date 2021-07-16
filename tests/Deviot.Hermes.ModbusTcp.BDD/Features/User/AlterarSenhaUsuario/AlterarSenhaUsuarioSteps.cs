@@ -60,7 +60,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.AlterarSenhaUsuario
         public async Task QuandoExecutarAUrlViaPUT()
         {
             var content = Utils.CreateStringContent(Utils.Serializer(_userPassword));
-            _httpResponseMessage = await _integrationTestFixture.Client.PutAsync($"/api/v1/user/change-password", content);
+            _httpResponseMessage = await _integrationTestFixture.Client.PutAsync($"/api/v1/user/change-password/{_userPassword.Id}", content);
             var json = await _httpResponseMessage.Content.ReadAsStringAsync();
 
             if (!string.IsNullOrEmpty(json))

@@ -21,7 +21,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Configurations
     {
         private static string CONNECTION_STRING = "SQLiteConnection";
 
-        private static string CONNECTION_STRING_ERROR = "A conexão do SQLite não foi informada.";
+        private static string CONNECTION_STRING_ERROR = "A conexão do SQLite não foi informada";
 
         public static IServiceCollection AddDependencyInjectionConfiguration(this IServiceCollection services, IConfiguration configuration)
         {

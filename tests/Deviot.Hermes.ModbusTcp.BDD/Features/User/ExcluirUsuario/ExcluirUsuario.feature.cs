@@ -253,7 +253,7 @@ testRunner.And("que tenho um id de usuário válido", ((string)(null)), ((TechTa
 testRunner.When("executar a url via DELETE", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 27
-testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 28
 testRunner.And("a mensagem \'Somente um administrador pode criar ou deletar um usuário\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
@@ -300,7 +300,7 @@ testRunner.And("que tenho um id de administrador válido", ((string)(null)), ((T
 testRunner.When("executar a url via DELETE", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 34
-testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 35
 testRunner.And("a mensagem \'Não é possivel deletar todos os usuários administradores\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");

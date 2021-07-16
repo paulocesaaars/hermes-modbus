@@ -50,7 +50,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             if (loggedUser.Administrator)
                 return true;
 
-            NotifyUnauthorized(INSERT_OR_DELETE_USER_AUTHORIZATION);
+            NotifyForbidden(INSERT_OR_DELETE_USER_AUTHORIZATION);
             return false;
         }
 
@@ -64,14 +64,14 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             {
                 if(user.Administrator)
                 {
-                    NotifyUnauthorized(CHANGE_USER_TO_ADMINISTRATOR);
+                    NotifyForbidden(CHANGE_USER_TO_ADMINISTRATOR);
                     return false;
                 }
 
                 return true;
             }
 
-            NotifyUnauthorized(CHANGE_ANOTHER_USER_DATA);
+            NotifyForbidden(CHANGE_ANOTHER_USER_DATA);
             return false;
         }
 
@@ -81,7 +81,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             if (loggedUser.Id == userId)
                 return true;
 
-            NotifyUnauthorized(CHANGE_ANOTHER_USER_DATA);
+            NotifyForbidden(CHANGE_ANOTHER_USER_DATA);
             return false;
         }
 
@@ -138,6 +138,34 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             }
         }
 
+        public async Task<bool> CheckUserNameExistAsync(string userName)
+        {
+            try
+            {
+                return await _repository.Get<User>()
+                                        .AnyAsync(x => x.UserName.ToLower() == userName.ToLower());
+            }
+            catch (Exception exception)
+            {
+                NotifyInternalServerError(exception);
+                return false;
+            }
+        }
+
+        public async Task<long> TotalRegistersAsync()
+        {
+            try
+            {
+                var result = await _repository.Get<User>().CountAsync();
+                return result;
+            }
+            catch (Exception exception)
+            {
+                NotifyInternalServerError(exception);
+                return -1;
+            }
+        }
+
         public async Task InsertAsync(User user)
         {
             try
@@ -151,7 +179,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
 
                         if (check)
                         {
-                            NotifyForbidden(USERNAME_ALREADY_EXISTS);
+                            NotifyBadRequest(USERNAME_ALREADY_EXISTS);
                         }
                         else
                         {
@@ -185,7 +213,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                             var check = await CheckUserNameExistAsync(userInfo);
                             if (check)
                             {
-                                NotifyForbidden(USERNAME_ALREADY_EXISTS);
+                                NotifyBadRequest(USERNAME_ALREADY_EXISTS);
                             }
                             else
                             {
@@ -208,34 +236,6 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             catch (Exception exception)
             {
                 NotifyInternalServerError(exception);
-            }
-        }
-
-        public async Task DeleteAsync(Guid id)
-        {
-            if (CheckInsertOrDeleteAuthorization())
-            {
-                var user = await _repository.Get<User>()
-                                        .FirstOrDefaultAsync(x => x.Id == id);
-
-                if (user is null)
-                {
-                    NotifyNotFound(USER_NOT_FOUND);
-                    return;
-                }
-
-                if (user.Administrator)
-                {
-                    var count = await _repository.Get<User>().CountAsync(x => x.Administrator);
-                    if (count == 1)
-                    {
-                        NotifyUnauthorized(DELETE_ADMINISTRATOR_LIMITS);
-                        return;
-                    }
-                }
-
-                await _repository.DeleteAsync<User>(user);
-                NotifyOk(USER_DELETED);
             }
         }
 
@@ -270,31 +270,31 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             }
         }
 
-        public async Task<bool> CheckUserNameExistAsync(string userName)
+        public async Task DeleteAsync(Guid id)
         {
-            try
+            if (CheckInsertOrDeleteAuthorization())
             {
-                return await _repository.Get<User>()
-                                        .AnyAsync(x => x.UserName.ToLower() == userName.ToLower());
-            }
-            catch (Exception exception)
-            {
-                NotifyInternalServerError(exception);
-                return false;
-            }
-        }
+                var user = await _repository.Get<User>()
+                                        .FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<long> TotalRegistersAsync()
-        {
-            try
-            {
-                var result = await _repository.Get<User>().CountAsync();
-                return result;
-            }
-            catch (Exception exception)
-            {
-                NotifyInternalServerError(exception);
-                return -1;
+                if (user is null)
+                {
+                    NotifyNotFound(USER_NOT_FOUND);
+                    return;
+                }
+
+                if (user.Administrator)
+                {
+                    var count = await _repository.Get<User>().CountAsync(x => x.Administrator);
+                    if (count == 1)
+                    {
+                        NotifyForbidden(DELETE_ADMINISTRATOR_LIMITS);
+                        return;
+                    }
+                }
+
+                await _repository.DeleteAsync<User>(user);
+                NotifyOk(USER_DELETED);
             }
         }
     }

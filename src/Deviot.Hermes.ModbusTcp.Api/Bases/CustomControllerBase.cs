@@ -24,6 +24,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Bases
 
         private const string CONTENT_TYPE = "application/json";
         private const string OK_MESSAGE = "A requisição foi executada com sucesso";
+        private const string INVALID_ID = "Id inválido";
         private const string INTERNAL_ERROR_MESSAGE = "A requisição não foi executada com sucesso, erro não identificado";
 
         protected CustomControllerBase(INotifier notifier, 
@@ -72,16 +73,21 @@ namespace Deviot.Hermes.ModbusTcp.Api.Bases
                     httpStatusCode = HttpStatusCode.InternalServerError;
                     messages.Add(notifies.First(x => x.Type == HttpStatusCode.InternalServerError).Message);
                 }
-                else if(notifies.Any(x => x.Type == HttpStatusCode.Forbidden))
-                {
-                    httpStatusCode = HttpStatusCode.Forbidden;
-                    foreach (var notify in notifies.Where(x => x.Type == HttpStatusCode.Forbidden))
-                        messages.Add(notify.Message);
-                }
                 else if (notifies.Any(x => x.Type == HttpStatusCode.NotFound))
                 {
                     httpStatusCode = HttpStatusCode.NotFound;
                     messages.Add(notifies.First(x => x.Type == HttpStatusCode.NotFound).Message);
+                }
+                else if (notifies.Any(x => x.Type == HttpStatusCode.Forbidden))
+                {
+                    httpStatusCode = HttpStatusCode.Forbidden;
+                    messages.Add(notifies.First(x => x.Type == HttpStatusCode.Forbidden).Message);
+                }
+                else if (notifies.Any(x => x.Type == HttpStatusCode.BadRequest))
+                {
+                    httpStatusCode = HttpStatusCode.BadRequest;
+                    foreach (var notify in notifies.Where(x => x.Type == HttpStatusCode.BadRequest))
+                        messages.Add(notify.Message);
                 }
                 else if (notifies.Any(x => x.Type == HttpStatusCode.NoContent))
                 {
@@ -109,6 +115,11 @@ namespace Deviot.Hermes.ModbusTcp.Api.Bases
 
             messages.Add(OK_MESSAGE);
             return GenerateContentResult(httpStatusCode, messages, value);
+        }
+
+        protected static ActionResult ReturnActionResultForInvalidId()
+        {
+            return GenerateContentResult(HttpStatusCode.BadRequest, new List<string>(1) { INVALID_ID }, null);
         }
 
         protected ActionResult ReturnActionResultForGenericError(Exception exception)

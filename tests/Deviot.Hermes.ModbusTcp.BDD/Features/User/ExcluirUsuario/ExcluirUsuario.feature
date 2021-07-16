@@ -24,12 +24,12 @@ Cenário: Erro de autorização ao deletar um usuário
 Dado que tenho um token de acesso normal
 E que tenho um id de usuário válido
 Quando executar a url via DELETE
-Então a api retornará status code 401
+Então a api retornará status code 403
 E a mensagem 'Somente um administrador pode criar ou deletar um usuário'
 
 Cenário: Erro de autorização ao deletar todos os usuários administradores
 Dado que tenho um token de acesso admin
 E que tenho um id de administrador válido
 Quando executar a url via DELETE
-Então a api retornará status code 401
+Então a api retornará status code 403
 E a mensagem 'Não é possivel deletar todos os usuários administradores'

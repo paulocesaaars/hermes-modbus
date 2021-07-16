@@ -165,7 +165,7 @@ testRunner.And("que tenho um usuário com nome inválido", ((string)(null)), ((T
 testRunner.When("executar a url via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 15
-testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 16
 testRunner.And("a mensagem \'O nome de usuário precisar ter somente valores alfanuméricos ou under" +
@@ -213,7 +213,7 @@ testRunner.And("que tenho um usuário com senha inválida", ((string)(null)), ((
 testRunner.When("executar a url via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 22
-testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 23
 testRunner.And("a mensagem \'A senha precisar ter somente valores alfanuméricos\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
@@ -260,7 +260,7 @@ testRunner.And("que tenho um usuário com nome já existente", ((string)(null)),
 testRunner.When("executar a url via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 29
-testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 30
 testRunner.And("a mensagem \'O nome de usuário informado já existe\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
@@ -348,7 +348,7 @@ testRunner.And("que tenho um usuário válido", ((string)(null)), ((TechTalk.Spe
 testRunner.When("executar a url via POST", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 41
-testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 42
 testRunner.And("a mensagem \'Somente um administrador pode criar ou deletar um usuário\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");

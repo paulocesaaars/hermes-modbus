@@ -165,7 +165,7 @@ testRunner.And("que tenho uma nova senha de usuário", ((string)(null)), ((TechT
 testRunner.When("executar a url via PUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 15
-testRunner.Then("a api retornará status code 401", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+testRunner.Then("a api retornará status code 403", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 16
 testRunner.And("a mensagem \'Não é permitido alterar dados de outro usuário\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");

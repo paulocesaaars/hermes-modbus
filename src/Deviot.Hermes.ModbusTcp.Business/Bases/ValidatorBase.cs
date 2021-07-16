@@ -6,7 +6,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Base
     {
         protected ValidatorBase()
         {
-            RuleFor(x => x.Id).NotEmpty().WithMessage("O id é obrigatório.");
+            RuleFor(x => x.Id).NotEmpty().WithMessage("O id é obrigatório");
         }
     }
 }

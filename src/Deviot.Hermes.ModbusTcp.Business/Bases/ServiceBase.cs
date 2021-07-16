@@ -14,7 +14,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Bases
         protected readonly ILogger _logger;
         protected readonly IRepository _repository;
 
-        protected const string INTERNAL_ERROR_MESSAGE = "Houve um problema ao realizar o processamento.";
+        protected const string INTERNAL_ERROR_MESSAGE = "Houve um problema ao realizar o processamento";
 
         protected ServiceBase(INotifier notifier, ILogger logger, IRepository repository)
         {
@@ -30,7 +30,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Bases
                 return true;
 
             foreach(var error in result.Errors)
-                NotifyForbidden(error.ErrorMessage);
+                NotifyBadRequest(error.ErrorMessage);
 
             return false;
         }
@@ -53,6 +53,12 @@ namespace Deviot.Hermes.ModbusTcp.Business.Bases
             _notifier.Notify(HttpStatusCode.NoContent, message);
         }
 
+        public virtual void NotifyBadRequest(string message)
+        {
+            _logger.LogWarning(message);
+            _notifier.Notify(HttpStatusCode.BadRequest, message);
+        }
+
         public virtual void NotifyForbidden(string message)
         {
             _logger.LogWarning(message);
@@ -63,12 +69,6 @@ namespace Deviot.Hermes.ModbusTcp.Business.Bases
         {
             _logger.LogWarning(message);
             _notifier.Notify(HttpStatusCode.NotFound, message);
-        }
-
-        public virtual void NotifyUnauthorized(string message)
-        {
-            _logger.LogError(message);
-            _notifier.Notify(HttpStatusCode.Unauthorized, message);
         }
 
         public virtual void NotifyInternalServerError(Exception exception)
