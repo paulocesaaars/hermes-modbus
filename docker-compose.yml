@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  deviot.hermes.modbustcp.api:
+    image: deviothermesmodbustcpapi
+    build:
+      context: .
+      dockerfile: Api-Dockerfile
+    environment:
+        ASPNETCORE_ENVIRONMENT: "Production"
+        ASPNETCORE_URLS: "https://+:443;http://+:80"
+        ASPNETCORE_Kestrel__Certificates__Default__Password: "Paula@123"
+        ASPNETCORE_Kestrel__Certificates__Default__Path: "/https/aspnetapp.pfx"
+        SQLiteConnection: "Data Source=Data.db;Cache=Shared"
+        JwtSettings__Key: "SENHASUPERSECRETA"
+        JwtSettings__ExpirationTimeSeconds: "86400"
+        JwtSettings__ValidIssuer: "DEVIOT"
+        JwtSettings__ValidAudience: "http://localhost"
+    ports:
+        - "5000:80"
+        - "5001:443"
+    volumes:
+        - ~/.aspnet/https:/https:ro

@@ -17,6 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deviot.Hermes.ModbusTcp.BDD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deviot.Hermes.ModbusTcp.TDD", "tests\Deviot.Hermes.ModbusTcp.TDD\Deviot.Hermes.ModbusTcp.TDD.csproj", "{89A731E6-D6DF-418C-9DA7-BA468800E8C4}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C3872ECE-832E-4D4D-A876-A0E75446E369}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_other-solution-files", "_other-solution-files", "{DB703233-4C3F-4209-901E-287CCA9C8951}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +96,18 @@ Global
 		{89A731E6-D6DF-418C-9DA7-BA468800E8C4}.Release|x64.Build.0 = Release|Any CPU
 		{89A731E6-D6DF-418C-9DA7-BA468800E8C4}.Release|x86.ActiveCfg = Release|Any CPU
 		{89A731E6-D6DF-418C-9DA7-BA468800E8C4}.Release|x86.Build.0 = Release|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Debug|x64.Build.0 = Debug|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Debug|x86.Build.0 = Debug|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Release|x64.ActiveCfg = Release|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Release|x64.Build.0 = Release|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Release|x86.ActiveCfg = Release|Any CPU
+		{C3872ECE-832E-4D4D-A876-A0E75446E369}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
