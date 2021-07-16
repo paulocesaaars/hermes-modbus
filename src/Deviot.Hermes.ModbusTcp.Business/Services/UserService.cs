@@ -50,7 +50,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             if (loggedUser.Administrator)
                 return true;
 
-            NotifyUnauthorized(INSERT_OR_DELETE_USER_AUTHORIZATION);
+            NotifyForbidden(INSERT_OR_DELETE_USER_AUTHORIZATION);
             return false;
         }
 
@@ -64,14 +64,14 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             {
                 if(user.Administrator)
                 {
-                    NotifyUnauthorized(CHANGE_USER_TO_ADMINISTRATOR);
+                    NotifyForbidden(CHANGE_USER_TO_ADMINISTRATOR);
                     return false;
                 }
 
                 return true;
             }
 
-            NotifyUnauthorized(CHANGE_ANOTHER_USER_DATA);
+            NotifyForbidden(CHANGE_ANOTHER_USER_DATA);
             return false;
         }
 
@@ -81,7 +81,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             if (loggedUser.Id == userId)
                 return true;
 
-            NotifyUnauthorized(CHANGE_ANOTHER_USER_DATA);
+            NotifyForbidden(CHANGE_ANOTHER_USER_DATA);
             return false;
         }
 
@@ -229,7 +229,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                     var count = await _repository.Get<User>().CountAsync(x => x.Administrator);
                     if (count == 1)
                     {
-                        NotifyUnauthorized(DELETE_ADMINISTRATOR_LIMITS);
+                        NotifyForbidden(DELETE_ADMINISTRATOR_LIMITS);
                         return;
                     }
                 }

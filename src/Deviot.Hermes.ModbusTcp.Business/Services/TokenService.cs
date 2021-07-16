@@ -41,9 +41,6 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             identityClaims.AddClaim(new Claim("user-username", user.UserName.ToString()));
             identityClaims.AddClaim(new Claim("user-administrator", user.Administrator.ToString()));
 
-            if (user.Administrator)
-                identityClaims.AddClaim(new Claim("role", "admin"));
-
             return identityClaims;
         }
 
