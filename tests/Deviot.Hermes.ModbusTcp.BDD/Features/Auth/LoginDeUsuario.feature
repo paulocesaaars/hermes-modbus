@@ -11,4 +11,4 @@ Cenário: Negar token de acesso
 Dado que tenho um username ou senha invalido
 Quando executar a url via POST
 Então a api retornará um stutus code 404
-E uma mensagem de erro: 'Usuário ou senha inválidos.'
+E uma mensagem de erro: 'Usuário ou senha inválidos'

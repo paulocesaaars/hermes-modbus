@@ -103,7 +103,7 @@ namespace Deviot.Hermes.ModbusTcp.BDD.Features.User.EditarUsuario
         public async Task QuandoExecutarAUrlViaPUT()
         {
             var content = Utils.CreateStringContent(Utils.Serializer(_user));
-            _httpResponseMessage = await _integrationTestFixture.Client.PutAsync($"/api/v1/user", content);
+            _httpResponseMessage = await _integrationTestFixture.Client.PutAsync($"/api/v1/user/{_user.Id}", content);
             var json = await _httpResponseMessage.Content.ReadAsStringAsync();
 
             if (!string.IsNullOrEmpty(json))

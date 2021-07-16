@@ -61,6 +61,37 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
             _userServiceFixture.HasNotifications.Should().BeFalse();
         }
 
+        [Fact(DisplayName = "Checar nome de usuário - Existe")]
+        public async Task CheckUserNameExist_ExistAsync()
+        {
+            var user = UserInfoFake.GetUserPaulo();
+            var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
+
+            var result = await userService.CheckUserNameExistAsync(user.UserName);
+
+            result.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Checar nome de usuário - Não existe")]
+        public async Task CheckUserNameExist_NotExistAsync()
+        {
+            var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
+
+            var result = await userService.CheckUserNameExistAsync("invalid_user");
+
+            result.Should().BeFalse();
+        }
+
+        [Fact(DisplayName = "Total de usuários")]
+        public async Task TotalRegistersAsync()
+        {
+            var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
+
+            var result = await userService.TotalRegistersAsync();
+
+            result.Should().BeGreaterOrEqualTo(3);
+        }
+
         [Fact(DisplayName = "Inserir usuário normal - Sucesso")]
         public async Task InsertNormalUser_SuccessAsync()
         {
@@ -88,7 +119,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().BeNull();
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Forbidden)
+                               .Any(x => x.Type == HttpStatusCode.BadRequest)
                                .Should()
                                .BeTrue();
         }
@@ -122,7 +153,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().BeNull();
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Unauthorized)
+                               .Any(x => x.Type == HttpStatusCode.Forbidden)
                                .Should()
                                .BeTrue();
         }
@@ -138,7 +169,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().BeNull();
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Forbidden)
+                               .Any(x => x.Type == HttpStatusCode.BadRequest)
                                .Should()
                                .BeTrue();
         }
@@ -174,7 +205,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().NotBeEquivalentTo(user);
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Forbidden)
+                               .Any(x => x.Type == HttpStatusCode.BadRequest)
                                .Should()
                                .BeTrue();
         }
@@ -192,7 +223,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().NotBeEquivalentTo(user);
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Unauthorized)
+                               .Any(x => x.Type == HttpStatusCode.Forbidden)
                                .Should()
                                .BeTrue();
         }
@@ -210,7 +241,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().NotBeEquivalentTo(user);
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Forbidden)
+                               .Any(x => x.Type == HttpStatusCode.BadRequest)
                                .Should()
                                .BeTrue();
         }
@@ -247,7 +278,64 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().NotBeEquivalentTo(user);
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Unauthorized)
+                               .Any(x => x.Type == HttpStatusCode.Forbidden)
+                               .Should()
+                               .BeTrue();
+        }
+
+        [Fact(DisplayName = "Alterar senha - Sucesso")]
+        public async Task UpdatePassword_SuccessAsync()
+        {
+            var user = UserFake.GetUserBruna();
+            var userPassword = new UserPassword(user.Id, user.Password, "hermes");
+            var userService = _userServiceFixture.GetService(user);
+
+            await userService.ChangePasswordAsync(userPassword);
+
+            _userServiceFixture.HasNotifications.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Alterar senha - Erro de validação")]
+        public async Task UpdatePassword_ValidationErrorAsync()
+        {
+            var user = UserFake.GetUserPaula();
+            var userPassword = new UserPassword(user.Id, user.Password, "123");
+            var userService = _userServiceFixture.GetService(user);
+
+            await userService.ChangePasswordAsync(userPassword);
+
+            _userServiceFixture.Notifications
+                               .Any(x => x.Type == HttpStatusCode.BadRequest)
+                               .Should()
+                               .BeTrue();
+        }
+
+        [Fact(DisplayName = "Alterar senha - Não permite alterar senha de outro usuário")]
+        public async Task UpdatePassword_AuthorizationErrorAsync()
+        {
+            var user = UserFake.GetUserPaula();
+            var userPassword = new UserPassword(user.Id, user.Password, "123456");
+            var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
+
+            await userService.ChangePasswordAsync(userPassword);
+
+            _userServiceFixture.Notifications
+                               .Any(x => x.Type == HttpStatusCode.Forbidden)
+                               .Should()
+                               .BeTrue();
+        }
+
+        [Fact(DisplayName = "Alterar senha - Senha atual inválida")]
+        public async Task UpdatePassword_InvalidPasswordAsync()
+        {
+            var user = UserFake.GetUserPaula();
+            var userPassword = new UserPassword(user.Id, "654321", "hermes");
+            var userService = _userServiceFixture.GetService(user);
+
+            await userService.ChangePasswordAsync(userPassword);
+
+            _userServiceFixture.Notifications
+                               .Any(x => x.Type == HttpStatusCode.Forbidden)
                                .Should()
                                .BeTrue();
         }
@@ -276,7 +364,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().BeEquivalentTo(user);
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Unauthorized)
+                               .Any(x => x.Type == HttpStatusCode.Forbidden)
                                .Should()
                                .BeTrue();
         }
@@ -308,97 +396,9 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Business.Services
 
             result.Should().BeEquivalentTo(user);
             _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Unauthorized)
-                               .Should()
-                               .BeTrue();
-        }
-
-        [Fact(DisplayName = "Alterar senha - Sucesso")]
-        public async Task UpdatePassword_SuccessAsync()
-        {
-            var user = UserFake.GetUserBruna();
-            var userPassword = new UserPassword(user.Id, user.Password, "hermes");
-            var userService = _userServiceFixture.GetService(user);
-
-            await userService.ChangePasswordAsync(userPassword);
-
-            _userServiceFixture.HasNotifications.Should().BeTrue();
-        }
-
-        [Fact(DisplayName = "Alterar senha - Erro de validação")]
-        public async Task UpdatePassword_ValidationErrorAsync()
-        {
-            var user = UserFake.GetUserPaula();
-            var userPassword = new UserPassword(user.Id, user.Password, "123");
-            var userService = _userServiceFixture.GetService(user);
-
-            await userService.ChangePasswordAsync(userPassword);
-
-            _userServiceFixture.Notifications
                                .Any(x => x.Type == HttpStatusCode.Forbidden)
                                .Should()
                                .BeTrue();
-        }
-
-        [Fact(DisplayName = "Alterar senha - Não permite alterar senha de outro usuário")]
-        public async Task UpdatePassword_AuthorizationErrorAsync()
-        {
-            var user = UserFake.GetUserPaula();
-            var userPassword = new UserPassword(user.Id, user.Password, "123456");
-            var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
-
-            await userService.ChangePasswordAsync(userPassword);
-
-            _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Unauthorized)
-                               .Should()
-                               .BeTrue();
-        }
-
-        [Fact(DisplayName = "Alterar senha - Senha atual inválida")]
-        public async Task UpdatePassword_InvalidPasswordAsync()
-        {
-            var user = UserFake.GetUserPaula();
-            var userPassword = new UserPassword(user.Id, "654321", "hermes");
-            var userService = _userServiceFixture.GetService(user);
-
-            await userService.ChangePasswordAsync(userPassword);
-
-            _userServiceFixture.Notifications
-                               .Any(x => x.Type == HttpStatusCode.Forbidden)
-                               .Should()
-                               .BeTrue();
-        }
-
-        [Fact(DisplayName = "Checar nome de usuário - Existe")]
-        public async Task CheckUserNameExist_ExistAsync()
-        {
-            var user = UserInfoFake.GetUserPaulo();
-            var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
-
-            var result = await userService.CheckUserNameExistAsync(user.UserName);
-
-            result.Should().BeTrue();
-        }
-
-        [Fact(DisplayName = "Checar nome de usuário - Não existe")]
-        public async Task CheckUserNameExist_NotExistAsync()
-        {
-            var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
-
-            var result = await userService.CheckUserNameExistAsync("invalid_user");
-
-            result.Should().BeFalse();
-        }
-
-        [Fact(DisplayName = "Total de usuários")]
-        public async Task TotalRegistersAsync()
-        {
-            var userService = _userServiceFixture.GetServiceWithLoggedAdmin();
-
-            var result = await userService.TotalRegistersAsync();
-
-            result.Should().BeGreaterOrEqualTo(3);
         }
     }
 }

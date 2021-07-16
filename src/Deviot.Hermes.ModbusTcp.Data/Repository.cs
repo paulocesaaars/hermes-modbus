@@ -10,7 +10,7 @@ namespace Deviot.Hermes.ModbusTcp.Data
 {
     public class Repository : IRepository
     {
-        private const string GENERIC_ERROR = "Houve um erro na camada de infraestrutura.";
+        private const string GENERIC_ERROR = "Houve um erro na camada de infraestrutura";
 
         public DbContext DbContext { get; private set; }
 

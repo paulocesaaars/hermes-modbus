@@ -138,6 +138,34 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
             }
         }
 
+        public async Task<bool> CheckUserNameExistAsync(string userName)
+        {
+            try
+            {
+                return await _repository.Get<User>()
+                                        .AnyAsync(x => x.UserName.ToLower() == userName.ToLower());
+            }
+            catch (Exception exception)
+            {
+                NotifyInternalServerError(exception);
+                return false;
+            }
+        }
+
+        public async Task<long> TotalRegistersAsync()
+        {
+            try
+            {
+                var result = await _repository.Get<User>().CountAsync();
+                return result;
+            }
+            catch (Exception exception)
+            {
+                NotifyInternalServerError(exception);
+                return -1;
+            }
+        }
+
         public async Task InsertAsync(User user)
         {
             try
@@ -151,7 +179,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
 
                         if (check)
                         {
-                            NotifyForbidden(USERNAME_ALREADY_EXISTS);
+                            NotifyBadRequest(USERNAME_ALREADY_EXISTS);
                         }
                         else
                         {
@@ -185,7 +213,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                             var check = await CheckUserNameExistAsync(userInfo);
                             if (check)
                             {
-                                NotifyForbidden(USERNAME_ALREADY_EXISTS);
+                                NotifyBadRequest(USERNAME_ALREADY_EXISTS);
                             }
                             else
                             {
@@ -201,6 +229,37 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
                         else
                         {
                             NotifyNotFound(USER_NOT_FOUND);
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                NotifyInternalServerError(exception);
+            }
+        }
+
+        public async Task ChangePasswordAsync(UserPassword userPassword)
+        {
+            try
+            {
+                var valid = ValidateEntity<UserPassword>(_userPasswordValidator, userPassword);
+                if (valid)
+                {
+                    if (CheckUpdatePasswordAuthorization(userPassword.Id))
+                    {
+                        var user = await _repository.Get<User>()
+                                                    .FirstOrDefaultAsync(x => x.Id == userPassword.Id);
+
+                        if (user.Password == Utils.Encript(userPassword.Password))
+                        {
+                            user.SetPassword(Utils.Encript(userPassword.NewPassword));
+                            await _repository.EditAsync<User>(user);
+                            NotifyOk(USER_UPDATED);
+                        }
+                        else
+                        {
+                            NotifyForbidden(INVALID_PASSWORD);
                         }
                     }
                 }
@@ -236,65 +295,6 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
 
                 await _repository.DeleteAsync<User>(user);
                 NotifyOk(USER_DELETED);
-            }
-        }
-
-        public async Task ChangePasswordAsync(UserPassword userPassword)
-        {
-            try
-            {
-                var valid = ValidateEntity<UserPassword>(_userPasswordValidator, userPassword);
-                if (valid)
-                {
-                    if (CheckUpdatePasswordAuthorization(userPassword.Id))
-                    {
-                        var user = await _repository.Get<User>()
-                                                    .FirstOrDefaultAsync(x => x.Id == userPassword.Id);
-
-                        if (user.Password == Utils.Encript(userPassword.Password))
-                        {
-                            user.SetPassword(Utils.Encript(userPassword.NewPassword));
-                            await _repository.EditAsync<User>(user);
-                            NotifyOk(USER_UPDATED);
-                        }
-                        else
-                        {
-                            NotifyForbidden(INVALID_PASSWORD);
-                        }
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                NotifyInternalServerError(exception);
-            }
-        }
-
-        public async Task<bool> CheckUserNameExistAsync(string userName)
-        {
-            try
-            {
-                return await _repository.Get<User>()
-                                        .AnyAsync(x => x.UserName.ToLower() == userName.ToLower());
-            }
-            catch (Exception exception)
-            {
-                NotifyInternalServerError(exception);
-                return false;
-            }
-        }
-
-        public async Task<long> TotalRegistersAsync()
-        {
-            try
-            {
-                var result = await _repository.Get<User>().CountAsync();
-                return result;
-            }
-            catch (Exception exception)
-            {
-                NotifyInternalServerError(exception);
-                return -1;
             }
         }
     }

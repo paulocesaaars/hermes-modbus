@@ -73,16 +73,21 @@ namespace Deviot.Hermes.ModbusTcp.Api.Bases
                     httpStatusCode = HttpStatusCode.InternalServerError;
                     messages.Add(notifies.First(x => x.Type == HttpStatusCode.InternalServerError).Message);
                 }
-                else if(notifies.Any(x => x.Type == HttpStatusCode.Forbidden))
-                {
-                    httpStatusCode = HttpStatusCode.Forbidden;
-                    foreach (var notify in notifies.Where(x => x.Type == HttpStatusCode.Forbidden))
-                        messages.Add(notify.Message);
-                }
                 else if (notifies.Any(x => x.Type == HttpStatusCode.NotFound))
                 {
                     httpStatusCode = HttpStatusCode.NotFound;
                     messages.Add(notifies.First(x => x.Type == HttpStatusCode.NotFound).Message);
+                }
+                else if (notifies.Any(x => x.Type == HttpStatusCode.Forbidden))
+                {
+                    httpStatusCode = HttpStatusCode.Forbidden;
+                    messages.Add(notifies.First(x => x.Type == HttpStatusCode.Forbidden).Message);
+                }
+                else if (notifies.Any(x => x.Type == HttpStatusCode.BadRequest))
+                {
+                    httpStatusCode = HttpStatusCode.BadRequest;
+                    foreach (var notify in notifies.Where(x => x.Type == HttpStatusCode.BadRequest))
+                        messages.Add(notify.Message);
                 }
                 else if (notifies.Any(x => x.Type == HttpStatusCode.NoContent))
                 {

@@ -16,7 +16,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Services
         private readonly JwtSettings _jwtSettings;
 
         private const string CONFIG_ERROR = "As configurações do token não foram informadas";
-        private const string TOKEN_ERROR = "Erro ao gerar o token.";
+        private const string TOKEN_ERROR = "Erro ao gerar o token";
 
         public TokenService(IOptions<JwtSettings> jwtSettings)
         {

@@ -47,7 +47,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         {
             _userService.Setup(x => x.GetAsync(It.IsAny<Guid>()))
                         .ReturnsAsync(null as User)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Usuário não encontrado."));
+                        .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Usuário não encontrado"));
 
             var response = await _userController.GetAsync(Guid.NewGuid());
             var result = GetGenericActionResult(response);
@@ -62,7 +62,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         {
             _userService.Setup(x => x.GetAsync(It.IsAny<Guid>()))
                         .ReturnsAsync(null as User)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
 
             var response = await _userController.GetAsync(Guid.NewGuid());
             var result = GetGenericActionResult(response);
@@ -107,7 +107,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         {
             _userService.Setup(x => x.GetAllAsync())
                         .ReturnsAsync(null as IEnumerable<User>)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
 
             var response = await _userController.GetAllAsync();
             var result = GetGenericActionResult(response);
@@ -124,261 +124,6 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
                          .Throws(new Exception());
 
             var response = await _userController.GetAllAsync();
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
-            result.Messages.FirstOrDefault().Should().BeEquivalentTo(INTERNAL_ERROR_MESSAGE);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PostAsync_Return201()
-        {
-            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.Created, "Usuário inserido com sucesso."));
-
-            var response = await _userController.PostAsync(new UserViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.Created);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PostAsync_Return403()
-        {
-            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Usuário inválido."));
-
-            var response = await _userController.PostAsync(new UserViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.Forbidden);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PostAsync_Return500()
-        {
-            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
-
-            var response = await _userController.PostAsync(new UserViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PostAsync_ReturnGenericError()
-        {
-            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
-                        .Throws(new Exception());
-
-            var response = await _userController.PostAsync(new UserViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
-            result.Messages.FirstOrDefault().Should().BeEquivalentTo(INTERNAL_ERROR_MESSAGE);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PutAsync_Return200()
-        {
-            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.OK, "Usuário atualizado com sucesso."));
-
-            var response = await _userController.PutAsync(new UserInfoViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.OK);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PutAsync_Return403()
-        {
-            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Usuário inválido."));
-
-            var response = await _userController.PutAsync(new UserInfoViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.Forbidden);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PutAsync_Return404()
-        {
-            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Usuário não encontrado."));
-
-            var response = await _userController.PutAsync(new UserInfoViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.NotFound);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PutAsync_Return500()
-        {
-            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
-
-            var response = await _userController.PutAsync(new UserInfoViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task PutAsync_ReturnGenericError()
-        {
-            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
-                        .Throws(new Exception());
-
-            var response = await _userController.PutAsync(new UserInfoViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
-            result.Messages.FirstOrDefault().Should().BeEquivalentTo(INTERNAL_ERROR_MESSAGE);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task DeleteAsync_Return200()
-        {
-            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.OK, "Usuário deletado com sucesso."));
-
-            var response = await _userController.DeleteAsync(Guid.NewGuid());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.OK);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task DeleteAsync_Return404()
-        {
-            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Usuário não encontrado."));
-
-            var response = await _userController.DeleteAsync(Guid.NewGuid());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.NotFound);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task DeleteAsync_Return500()
-        {
-            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
-
-            var response = await _userController.DeleteAsync(Guid.NewGuid());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task DeleteAsync_ReturnGenericError()
-        {
-            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
-                        .Throws(new Exception());
-
-            var response = await _userController.DeleteAsync(Guid.NewGuid());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
-            result.Messages.FirstOrDefault().Should().BeEquivalentTo(INTERNAL_ERROR_MESSAGE);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task ChangePasswordAsync_Return200()
-        {
-            _userService.Setup(x => x.ChangePasswordAsync(It.IsAny<UserPassword>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.OK, "Senha de usuário alterada com sucesso."));
-
-            var response = await _userController.ChangePasswordAsync(new UserPasswordViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.OK);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task ChangePasswordAsync_Return403()
-        {
-            _userService.Setup(x => x.ChangePasswordAsync(It.IsAny<UserPassword>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Senha inválida."));
-
-            var response = await _userController.ChangePasswordAsync(new UserPasswordViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.Forbidden);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task ChangePasswordAsync_Return500()
-        {
-            _userService.Setup(x => x.ChangePasswordAsync(It.IsAny<UserPassword>()))
-                        .Returns(Task.CompletedTask)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
-
-            var response = await _userController.ChangePasswordAsync(new UserPasswordViewModel());
-            var result = GetGenericActionResult(response);
-            var statusCode = GetHttpStatusCode(response);
-
-            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
-            result.Data.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task ChangePasswordAsync_ReturnGenericError()
-        {
-            _userService.Setup(x => x.ChangePasswordAsync(It.IsAny<UserPassword>()))
-                        .Throws(new Exception());
-
-            var response = await _userController.ChangePasswordAsync(new UserPasswordViewModel());
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 
@@ -406,7 +151,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         {
             _userService.Setup(x => x.CheckUserNameExistAsync(It.IsAny<string>()))
                         .ReturnsAsync(false)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
 
             var response = await _userController.CheckUserNameExistAsync(string.Empty);
             var result = GetGenericActionResult(response);
@@ -450,7 +195,7 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
         {
             _userService.Setup(x => x.TotalRegistersAsync())
                         .ReturnsAsync(-1)
-                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível."));
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
 
             var response = await _userController.TotalRegistersAsync();
             var result = GetGenericActionResult(response);
@@ -467,6 +212,331 @@ namespace Deviot.Hermes.ModbusTcp.TDD.Api.Controllers.V1
                         .Throws(new Exception());
 
             var response = await _userController.TotalRegistersAsync();
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            result.Messages.FirstOrDefault().Should().BeEquivalentTo(INTERNAL_ERROR_MESSAGE);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PostAsync_Return201()
+        {
+            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.Created, "Usuário inserido com sucesso"));
+
+            var response = await _userController.PostAsync(new UserViewModel());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.Created);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PostAsync_Return400()
+        {
+            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.BadRequest, "Usuário inválido"));
+
+            var response = await _userController.PostAsync(new UserViewModel());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.BadRequest);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PostAsync_Return403()
+        {
+            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Somente um administrador pode criar ou deletar um usuário"));
+
+            var response = await _userController.PostAsync(new UserViewModel());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.Forbidden);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PostAsync_Return500()
+        {
+            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
+
+            var response = await _userController.PostAsync(new UserViewModel());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PostAsync_ReturnGenericError()
+        {
+            _userService.Setup(x => x.InsertAsync(It.IsAny<User>()))
+                        .Throws(new Exception());
+
+            var response = await _userController.PostAsync(new UserViewModel());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            result.Messages.FirstOrDefault().Should().BeEquivalentTo(INTERNAL_ERROR_MESSAGE);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PutAsync_Return200()
+        {
+            var id = Guid.NewGuid();
+            var userInfoViewModel = new UserInfoViewModel { Id = id };
+            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.OK, "Usuário atualizado com sucesso"));
+
+            var response = await _userController.PutAsync(id, userInfoViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.OK);
+            result.Data.Should().BeNull();
+        }
+        
+        [Fact]
+        public async Task PutAsync_Return400()
+        {
+            var response = await _userController.PutAsync(Guid.NewGuid(), new UserInfoViewModel());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.BadRequest);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PutAsync_Return403()
+        {
+            var id = Guid.NewGuid();
+            var userInfoViewModel = new UserInfoViewModel { Id = id };
+            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Não é permitido alterar dados de outro usuário"));
+
+            var response = await _userController.PutAsync(id, userInfoViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.Forbidden);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PutAsync_Return404()
+        {
+            var id = Guid.NewGuid();
+            var userInfoViewModel = new UserInfoViewModel { Id = id };
+            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Usuário não encontrado"));
+
+            var response = await _userController.PutAsync(id, userInfoViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.NotFound);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PutAsync_Return500()
+        {
+            var id = Guid.NewGuid();
+            var userInfoViewModel = new UserInfoViewModel { Id = id };
+            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
+
+            var response = await _userController.PutAsync(id, userInfoViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task PutAsync_ReturnGenericError()
+        {
+            var id = Guid.NewGuid();
+            var userInfoViewModel = new UserInfoViewModel { Id = id };
+            _userService.Setup(x => x.UpdateAsync(It.IsAny<UserInfo>()))
+                        .Throws(new Exception());
+
+            var response = await _userController.PutAsync(id, userInfoViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            result.Messages.FirstOrDefault().Should().BeEquivalentTo(INTERNAL_ERROR_MESSAGE);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task ChangePasswordAsync_Return200()
+        {
+            var id = Guid.NewGuid();
+            var userPasswordViewModel = new UserPasswordViewModel { Id = id };
+            _userService.Setup(x => x.ChangePasswordAsync(It.IsAny<UserPassword>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.OK, "Senha de usuário alterada com sucesso"));
+
+            var response = await _userController.ChangePasswordAsync(id, userPasswordViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.OK);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task ChangePasswordAsync_Return400()
+        {
+            var response = await _userController.ChangePasswordAsync(Guid.NewGuid(), new UserPasswordViewModel());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.BadRequest);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task ChangePasswordAsync_Return403()
+        {
+            var id = Guid.NewGuid();
+            var userPasswordViewModel = new UserPasswordViewModel { Id = id };
+            _userService.Setup(x => x.ChangePasswordAsync(It.IsAny<UserPassword>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Não é permitido alterar dados de outro usuário"));
+
+            var response = await _userController.ChangePasswordAsync(id, userPasswordViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.Forbidden);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task ChangePasswordAsync_Return500()
+        {
+            var id = Guid.NewGuid();
+            var userPasswordViewModel = new UserPasswordViewModel { Id = id };
+            _userService.Setup(x => x.ChangePasswordAsync(It.IsAny<UserPassword>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
+
+            var response = await _userController.ChangePasswordAsync(id, userPasswordViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task ChangePasswordAsync_ReturnGenericError()
+        {
+            var id = Guid.NewGuid();
+            var userPasswordViewModel = new UserPasswordViewModel { Id = id };
+            _userService.Setup(x => x.ChangePasswordAsync(It.IsAny<UserPassword>()))
+                        .Throws(new Exception());
+
+            var response = await _userController.ChangePasswordAsync(id, userPasswordViewModel);
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            result.Messages.FirstOrDefault().Should().BeEquivalentTo(INTERNAL_ERROR_MESSAGE);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task DeleteAsync_Return200()
+        {
+            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.OK, "Usuário deletado com sucesso"));
+
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.OK);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task DeleteAsync_Return403()
+        {
+            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.Forbidden, "Somente um administrador pode criar ou deletar um usuário"));
+
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.Forbidden);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task DeleteAsync_Return404()
+        {
+            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.NotFound, "Usuário não encontrado"));
+
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.NotFound);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task DeleteAsync_Return500()
+        {
+            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
+                        .Returns(Task.CompletedTask)
+                        .Callback(() => _notifier.Notify(HttpStatusCode.InternalServerError, "Banco de dados inacessível"));
+
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
+            var result = GetGenericActionResult(response);
+            var statusCode = GetHttpStatusCode(response);
+
+            statusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task DeleteAsync_ReturnGenericError()
+        {
+            _userService.Setup(x => x.DeleteAsync(It.IsAny<Guid>()))
+                        .Throws(new Exception());
+
+            var response = await _userController.DeleteAsync(Guid.NewGuid());
             var result = GetGenericActionResult(response);
             var statusCode = GetHttpStatusCode(response);
 

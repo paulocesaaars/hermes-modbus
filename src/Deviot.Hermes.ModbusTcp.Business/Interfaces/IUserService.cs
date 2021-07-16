@@ -11,16 +11,16 @@ namespace Deviot.Hermes.ModbusTcp.Business.Interfaces
 
         Task<IEnumerable<UserInfo>> GetAllAsync();
 
+        Task<bool> CheckUserNameExistAsync(string userName);
+
+        Task<long> TotalRegistersAsync();
+
         Task InsertAsync(User user);
 
         Task UpdateAsync(UserInfo userInfo);
 
-        Task DeleteAsync(Guid id);
-
         Task ChangePasswordAsync(UserPassword userPassword);
 
-        Task<bool> CheckUserNameExistAsync(string userName);
-
-        Task<long> TotalRegistersAsync();
+        Task DeleteAsync(Guid id);
     }
 }

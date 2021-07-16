@@ -14,7 +14,7 @@ namespace Deviot.Hermes.ModbusTcp.Business.Bases
         protected readonly ILogger _logger;
         protected readonly IRepository _repository;
 
-        protected const string INTERNAL_ERROR_MESSAGE = "Houve um problema ao realizar o processamento.";
+        protected const string INTERNAL_ERROR_MESSAGE = "Houve um problema ao realizar o processamento";
 
         protected ServiceBase(INotifier notifier, ILogger logger, IRepository repository)
         {

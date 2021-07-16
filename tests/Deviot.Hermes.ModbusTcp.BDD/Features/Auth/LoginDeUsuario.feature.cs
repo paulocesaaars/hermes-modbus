@@ -162,7 +162,7 @@ testRunner.When("executar a url via POST", ((string)(null)), ((TechTalk.SpecFlow
 testRunner.Then("a api retornará um stutus code 404", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 14
-testRunner.And("uma mensagem de erro: \'Usuário ou senha inválidos.\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+testRunner.And("uma mensagem de erro: \'Usuário ou senha inválidos\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             }
             this.ScenarioCleanup();

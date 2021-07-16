@@ -12,7 +12,7 @@ Cenário: Erro de autorização ao alterar senha de outro usuário
 Dado que tenho um token de acesso admin
 E que tenho uma nova senha de usuário
 Quando executar a url via PUT
-Então a api retornará status code 401
+Então a api retornará status code 403
 E a mensagem 'Não é permitido alterar dados de outro usuário'
 
 Cenário: Erro de validação ao informar senha atual

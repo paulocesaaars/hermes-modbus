@@ -49,7 +49,7 @@ namespace Deviot.Hermes.ModbusTcp.Api.Controllers.V1
                 return ReturnActionResultForGenericError(exception);
             }
         }
-        
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
